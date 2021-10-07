@@ -1,0 +1,58 @@
+.page {
+    background-color: #1f2028;
+    color: #ffff;
+}
+
+.navbar {
+    background-color: #353535;
+}
+
+@keyframes slideIn {
+    from {transform: translateX(-400px);}
+    to {transform: translateX(0);}
+}
+
+@keyframes slideOut {
+    from {transform: translateX(0);}
+    to {transform: translateX(-400px);}
+}
+
+.sidebar {
+    background-color: #151622;
+    animation: slideIn .5s;
+}
+
+.sidebarHide {
+    animation: slideOut .5s;
+    transform: translateX(-400px);
+    opacity: 0;
+    transition: 1s;
+    height: 0px;
+}
+.sideNav:hover {
+    background-color: #FF9F1C;
+    font-weight: 700;
+    color:black;
+    transition: .5s;
+}
+
+
+.TitleDivider {
+    background-color: #FF9F1C;
+}
+
+.newsContent {
+    color: black;
+}
+
+.dashboard {
+    background-color: #252633;
+}
+
+.dashboardContent {
+    background-color: #343546;
+
+    .title {
+        color: #FF9F1C;
+    }
+}
