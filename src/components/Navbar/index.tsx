@@ -9,7 +9,7 @@ import styles from './styles.module.scss';
 
 const Navbar = () => {
     return (
-        <div className={`${styles.navbar} flex items-center justify-between py-4 px-24`}>
+        <div className={`${styles.navbar} flex items-center justify-between py-4 px-8`}>
             <div className="flex gap-4 items-center">
                 <div className="cursor-pointer">
                     <Image

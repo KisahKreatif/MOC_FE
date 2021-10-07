@@ -1,0 +1,16 @@
+.sidebar {
+    background-color: #151622;
+    animation: slideIn .5s;
+    color: #ffff;
+}
+
+.sideNav:hover {
+    background-color: #FF9F1C;
+    font-weight: 700;
+    color:black;
+    transition: .5s;
+}
+
+.profileName {
+    color: #FF9F1C;
+}

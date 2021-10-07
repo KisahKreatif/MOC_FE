@@ -84,7 +84,13 @@ const DashboardMember = () => {
             <div className={` ${sideBar ? 'flex' : ''}`}>
                 <div className={`${sideBar ? `p-4 flex overflow-y-auto h-screen sticky top-16 ${Styles.sidebar}` : Styles.sidebarHide}`}>
                     <ul className="" >
-                        <li className={`${Styles.sideNav} px-4 py-2 mt-4 rounded-lg cursor-pointer`}>Pesan</li>
+                        <li className={`${Styles.sideNav} px-4 py-2 mt-4 rounded-lg cursor-pointer`}>
+                            <Link href="/dashboard/messages">
+                                <a>
+                                    Pesan
+                                </a>
+                            </Link>
+                        </li>
                         <li className={`${Styles.sideNav} px-4 py-2 mt-4 rounded-lg cursor-pointer`}>LeaderBoard</li>
                         <li className={`${Styles.sideNav} px-4 py-2 mt-4 rounded-lg cursor-pointer`}>All Produk</li>
                         <li className={`${Styles.sideNav} px-4 py-2 mt-4 rounded-lg cursor-pointer`}>Afiliasi</li>
