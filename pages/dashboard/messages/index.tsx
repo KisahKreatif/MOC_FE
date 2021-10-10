@@ -9,6 +9,7 @@ const Messages = () => {
     const [sideBar, setSideBar] = useState(false)
     const [selected, setSelected] = useState(null)
 
+
     return (
         <div className={Styles.page}>
             <Header page="Messages" />
