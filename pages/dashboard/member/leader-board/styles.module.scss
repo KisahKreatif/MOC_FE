@@ -1,0 +1,47 @@
+.divider {
+    background-color: #FF9F1C;
+}
+
+.input {
+    background-color: #252633;
+}
+
+.filter {
+    color: #FF9F1C;
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 1em;
+    overflow: hidden;
+
+    td, th {
+        text-align: left;
+        padding: 18px;
+      }
+
+    td {
+        background-color: #252633;
+    }
+
+    .thead {
+        background-color: #283246;
+    }
+
+    .tbody {
+        border-bottom: 1px solid #303355 ;
+        color: #FF9F1C;
+    }
+
+    .badgePrimary {
+        background-color: #F86D6D;
+        color: #ffff;
+    }
+
+    .badgeSecondary {
+        background-color: #60CD2D;
+        color: #ffff;
+    }
+}
+

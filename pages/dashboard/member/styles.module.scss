@@ -20,6 +20,7 @@
 .sidebar {
     background-color: #151622;
     animation: slideIn .5s;
+    // height: calc(100vh - 70px);
 }
 
 .sidebarHide {
@@ -31,7 +32,7 @@
 }
 .sideNav:hover {
     background-color: #FF9F1C;
-    font-weight: 700;
+    // font-weight: 700;
     color:black;
     transition: .5s;
 }
@@ -56,3 +57,26 @@
         color: #FF9F1C;
     }
 }
+
+.content {
+    background-color: #252633;
+}
+
+.strip {
+    background-color: #FF9F1C;
+}
+
+.allProduct:hover {
+    color: #FF9F1C;
+    transition: .5s;
+}
+
+@keyframes slideIn2 {
+    from {transform: translateY(-50px);}
+    to {transform: translateY(0);}
+}
+
+.childProduct {
+    animation: slideIn2 .5s;
+}
+
