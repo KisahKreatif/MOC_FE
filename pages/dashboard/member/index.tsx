@@ -18,7 +18,7 @@ import Gift from '../../../src/assets/svg/Gift.svg';
 import Box from '../../../src/assets/svg/Box.svg';
 import group_share from '../../../src/assets/svg/group_share.svg';
 import chevrontD from '../../../src/assets/svg/chevront-D.svg';
-import { useRouter } from "next/router"
+import { useRouter } from "next/router";
 
 const DashboardMember = ({ children }: any) => {
     const router = useRouter()
