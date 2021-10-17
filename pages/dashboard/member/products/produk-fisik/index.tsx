@@ -2,15 +2,17 @@ import Image from "next/image"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import DashboardMember from "../.."
-import ImageProduct from '../../../../../src/assets/images/course-product.png'
+import ImageProduct1 from '../../../../../src/assets/images/product-1.png'
+import ImageProduct2 from '../../../../../src/assets/images/product-2.png'
+import ImageProduct3 from '../../../../../src/assets/images/product-3.png'
 import filter from '../../../../../src/assets/svg/filter.svg'
 import star from '../../../../../src/assets/svg/star.svg'
 import Styles from './styles.module.scss'
 
-const Course = () => {
+const ProdukFisik = () => {
     const router = useRouter()
 
-    const [data, setData] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+    const [data, setData] = useState([{ id: 1, image: ImageProduct1 }, { id: 2, image: ImageProduct2 }, { id: 3, image: ImageProduct3 }, { id: 4, image: ImageProduct1 }, { id: 5, image: ImageProduct2 }, { id: 6, image: ImageProduct3 }])
 
     const goTo = (routeName: any) => {
         router.push(routeName)
@@ -23,10 +25,13 @@ const Course = () => {
                     <div className="flex gap-4 items-center">
                         <div className={`${Styles.divider} w-1 h-8`}></div>
                         <p className={`text-xl font-bold`}>All Product</p>
-                        <p className="text-xl">(Course)</p>
+                        <p className="text-xl">(Produk Fisik)</p>
                     </div>
-                    <div className="">
-                        <div className={`${Styles.input} flex gap-4 cursor-pointer py-2 px-4`}>
+                    <div className="flex gap-4 items-center">
+                        <div className="">
+                            <input type="text" name="search" id="search" placeholder="Cari Produk" className={`${Styles.input} text-white drop-shadow-xl	px-4 py-2 rounded-md`} />
+                        </div>
+                        <div className={`${Styles.input} drop-shadow-xl	 rounded-md flex gap-4 cursor-pointer py-2 px-4`}>
                             <Image
                                 src={filter}
                                 width={20}
@@ -37,22 +42,38 @@ const Course = () => {
                         </div>
                     </div>
                 </div>
+
+                <div className="flex gap-4 mt-4">
+                    <div className={`${Styles.ActiveBadge} px-6 cursor-pointer py-2 rounded-md`}>
+                        Skincare
+                    </div>
+                    <div className={`border-2 border-gray-400 px-6 cursor-pointer py-2 rounded-md`}>
+                        Supplement
+                    </div>
+                    <div className={`border-2 border-gray-400 px-6 cursor-pointer py-2 rounded-md`}>
+                        <p>F&B</p>
+                    </div>
+                    <div className={`border-2 border-gray-400 px-6 cursor-pointer py-2 rounded-md`}>
+                        Fashion
+                    </div>
+                </div>
+
                 <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
                     {data.map((el: any) => (
                         <div
                             key={el}
-                            className={`${Styles.card} p-4 rounded-lg cursor-pointer`}
-                            onClick={() => goTo(`/dashboard/member/products/course/detail/${el}`)}
+                            className={`${Styles.card} rounded-lg cursor-pointer`}
+                            onClick={() => goTo(`/dashboard/member/products/produk-fisik/detail/${el.id}`)}
                         >
                             <Image
-                                src={ImageProduct}
+                                src={el.image}
                                 width={100}
                                 height={100}
                                 alt="icon"
-                                className="object-cover"
+                                className="object-cover rounded-t-lg"
                                 layout="responsive"
                             />
-                            <div className="mt-4">
+                            <div className="p-4">
                                 <p className="text-xl font-bold">7 Private Acces</p>
                                 <div className="py-2">
                                     <div className={`${Styles.badge} py-2 rounded-md w-28 text-center text-xs`}>Free Member</div>
@@ -82,4 +103,4 @@ const Course = () => {
     )
 }
 
-export default Course
+export default ProdukFisik

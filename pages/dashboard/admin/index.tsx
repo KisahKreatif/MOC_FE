@@ -20,27 +20,26 @@ import group_share from '../../../src/assets/svg/group_share.svg';
 import chevrontD from '../../../src/assets/svg/chevront-D.svg';
 import { useRouter } from "next/router";
 
-const DashboardMember = ({ children }: any) => {
+const DashboardAdmin = ({ children }: any) => {
     const router = useRouter()
-    const [sideBar, setSideBar] = useState(false)
+    const [sideBar, setSideBar] = useState(true)
     const [childProduct, setChildProduct] = useState(false)
     const [childAfliasi, setChildAfliasi] = useState(false)
     const [childOrder, setChildOrder] = useState(false)
     const [sideNavAbsolute, setSideNavAbsolute] = useState(false)
 
     const goTo = (routeName: any) => {
-        if (routeName === '/dashboard/member/my-order/course') {
+        if (routeName === '/dashboard/admin/my-order/course') {
             console.log('here');
             setSideNavAbsolute(true)
         } else setSideNavAbsolute(false)
-        console.log(sideNavAbsolute, "<< sideNavAbsolute");
 
         router.push(routeName)
     }
 
     return (
         <div className={Styles.page}>
-            <Header page="Dashboard Member" />
+            <Header page="Dashboard Admin" />
 
             <div className={`${Styles.navbar} sticky top-0 z-50 flex items-center justify-between py-4 px-8`}>
                 <div className="flex gap-4 items-center">
@@ -54,7 +53,7 @@ const DashboardMember = ({ children }: any) => {
                     </div>
                     <div
                         className="logo cursor-pointer"
-                        onClick={() => goTo('/dashboard/member/home')}
+                        onClick={() => goTo('/dashboard/admin/home')}
                     >
                         <Image
                             src={Logo}
@@ -141,7 +140,7 @@ const DashboardMember = ({ children }: any) => {
                             </Link>
                         </li>
                         <li className={`${Styles.sideNav} px-4 py-2 mt-4 rounded-lg cursor-pointer`}>
-                            <Link href="/dashboard/member/leader-board">
+                            <Link href="/dashboard/admin/leader-board">
                                 <a className="flex gap-4 items-center">
                                     <Image
                                         src={Widget}
@@ -169,14 +168,14 @@ const DashboardMember = ({ children }: any) => {
                             <ul className={`${childProduct ? Styles.childProduct : `hidden`} ml-4`} >
                                 <li
                                     className={`${Styles.allProduct} flex gap-4 items-center px-4 py-2 mt-4 rounded-lg cursor-pointer`}
-                                    onClick={() => goTo('/dashboard/member/products/course')}
+                                    onClick={() => goTo('/dashboard/admin/products/course')}
                                 >
                                     <div className={`${Styles.strip} h-1 w-6`}></div>
                                     <p >Course</p>
                                 </li>
                                 <li
                                     className={`${Styles.allProduct} flex gap-4 items-center px-4 py-2 mt-4 rounded-lg cursor-pointer`}
-                                    onClick={() => goTo('/dashboard/member/products/produk-fisik')}
+                                    onClick={() => goTo('/dashboard/admin/products/produk-fisik')}
                                 >
                                     <div className={`${Styles.strip} h-1 w-6`}></div>
                                     <p>Produk</p>
@@ -199,35 +198,35 @@ const DashboardMember = ({ children }: any) => {
                             <ul className={`${childAfliasi ? Styles.childProduct : `hidden`} ml-4`} >
                                 <li
                                     className={`${Styles.allProduct} flex gap-4 items-center px-4 py-2 mt-4 rounded-lg cursor-pointer`}
-                                    onClick={() => goTo('/dashboard/member/afiliasi/link')}
+                                    onClick={() => goTo('/dashboard/admin/afiliasi/link')}
                                 >
                                     <div className={`${Styles.strip} h-1 w-6`}></div>
                                     <p className="text-sm">Link</p>
                                 </li>
                                 <li
                                     className={`${Styles.allProduct} flex gap-4 items-center px-4 py-2 mt-4 rounded-lg cursor-pointer`}
-                                    onClick={() => goTo('/dashboard/member/afiliasi/komisi-course')}
+                                    onClick={() => goTo('/dashboard/admin/afiliasi/komisi-course')}
                                 >
                                     <div className={`${Styles.strip} h-1 w-6`}></div>
                                     <p className="text-sm">Komisi Course</p>
                                 </li>
                                 <li
                                     className={`${Styles.allProduct} flex gap-4 items-center px-4 py-2 mt-4 rounded-lg cursor-pointer`}
-                                    onClick={() => goTo('/dashboard/member/afiliasi/komisi-fisik')}
+                                    onClick={() => goTo('/dashboard/admin/afiliasi/komisi-fisik')}
                                 >
                                     <div className={`${Styles.strip} h-1 w-6`}></div>
                                     <p className="text-sm">Komisi Fisik</p>
                                 </li>
                                 <li
                                     className={`${Styles.allProduct} flex gap-4 items-center px-4 py-2 mt-4 rounded-lg cursor-pointer`}
-                                    onClick={() => goTo('/dashboard/member/afiliasi/status')}
+                                    onClick={() => goTo('/dashboard/admin/afiliasi/status')}
                                 >
                                     <div className={`${Styles.strip} h-1 w-6`}></div>
                                     <p className="text-sm">Status</p>
                                 </li>
                                 <li
                                     className={`${Styles.allProduct} flex gap-4 items-center px-4 py-2 mt-4 rounded-lg cursor-pointer`}
-                                    onClick={() => goTo('/dashboard/member/afiliasi/facebook-pixel')}
+                                    onClick={() => goTo('/dashboard/admin/afiliasi/facebook-pixel')}
                                 >
                                     <div className={`${Styles.strip} h-1 w-6`}></div>
                                     <p className="text-sm">Facebook Pixel</p>
@@ -250,14 +249,14 @@ const DashboardMember = ({ children }: any) => {
                             <ul className={`${childOrder ? Styles.childProduct : `hidden`} ml-4`} >
                                 <li
                                     className={`${Styles.allProduct} flex gap-4 items-center px-4 py-2 mt-4 rounded-lg cursor-pointer`}
-                                    onClick={() => goTo('/dashboard/member/my-order/course')}
+                                    onClick={() => goTo('/dashboard/admin/my-order/course')}
                                 >
                                     <div className={`${Styles.strip} h-1 w-6`}></div>
                                     <p >Course</p>
                                 </li>
                                 <li
                                     className={`${Styles.allProduct} flex gap-4 items-center px-4 py-2 mt-4 rounded-lg cursor-pointer`}
-                                    onClick={() => goTo('/dashboard/member/my-order/product')}
+                                    onClick={() => goTo('/dashboard/admin/my-order/product')}
                                 >
                                     <div className={`${Styles.strip} h-1 w-6`}></div>
                                     <p>Product</p>
@@ -265,7 +264,7 @@ const DashboardMember = ({ children }: any) => {
                             </ul>
                         </li>
                         <li className={`${Styles.sideNav} px-4 py-2 mt-4 rounded-lg cursor-pointer`}>
-                            <Link href="/dashboard/member/my-reward">
+                            <Link href="/dashboard/admin/my-reward">
                                 <a className="flex gap-4 items-center">
                                     <Image
                                         src={Gift}
@@ -278,7 +277,7 @@ const DashboardMember = ({ children }: any) => {
                             </Link>
                         </li>
                         <li className={`${Styles.sideNav} px-4 py-2 mt-4 rounded-lg cursor-pointer`}>
-                            <Link href="/dashboard/member/leader-board">
+                            <Link href="/dashboard/admin/leader-board">
                                 <a className="flex gap-4 items-center">
                                     <Image
                                         src={File}
@@ -291,7 +290,7 @@ const DashboardMember = ({ children }: any) => {
                             </Link>
                         </li>
                         <li className={`${Styles.sideNav} px-4 py-2 mt-4 rounded-lg cursor-pointer`}>
-                            <Link href="/dashboard/member/my-course">
+                            <Link href="/dashboard/admin/my-course">
                                 <a className="flex gap-4 items-center">
                                     <Image
                                         src={BlankAlt}
@@ -304,7 +303,7 @@ const DashboardMember = ({ children }: any) => {
                             </Link>
                         </li>
                         <li className={`${Styles.sideNav} px-4 py-2 mt-4 rounded-lg cursor-pointer`}>
-                            <Link href="/dashboard/member/promotion-media">
+                            <Link href="/dashboard/admin/promotion-media">
                                 <a className="flex gap-4 items-center">
                                     <Image
                                         src={OutBox}
@@ -328,4 +327,4 @@ const DashboardMember = ({ children }: any) => {
 }
 
 
-export default DashboardMember
+export default DashboardAdmin

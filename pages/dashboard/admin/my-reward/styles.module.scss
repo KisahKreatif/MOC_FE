@@ -1,0 +1,33 @@
+.table {
+    border-collapse: collapse;
+    border-radius: 1em;
+    // width: 100%;
+    overflow: hidden;
+
+    td, th {
+        text-align: left;
+        padding: 18px;
+      }
+
+    td {
+        background-color: #252633;
+    }
+
+    .thead {
+        background-color: #283246;
+    }
+
+    .tbody {
+        border-bottom: 1px solid #303355 ;
+        color: #FF9F1C;
+    }
+
+    .badgePrimary {
+        background-color: #3DB007;
+        color: #ffff;
+    }
+    .badgeSecondary {
+        background-color: #CF1919;
+        color: #ffff;
+    }
+}
