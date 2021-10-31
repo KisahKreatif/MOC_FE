@@ -1,24 +1,57 @@
 import Image from 'next/image'
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
+import Slider, { Settings } from "react-slick"
 import banner from '../../../../src/assets/images/banner.jpg'
 import banner2 from '../../../../src/assets/images/banner-2.jpg'
 import Styles from './styles.module.scss'
 import DashboardMember from '..'
+import { NextPage } from 'next'
+import wrapper from '../../../../store'
+import { fetchBanners } from '../../../../store/reducers/banner'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import myLoader from '../../../../src/helpers/loadImage'
 
-const Home = () => {
+const Home: NextPage = () => {
+    const dispatch = useDispatch()
     const news = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    const settings: Settings = {
+        infinite: true,
+        arrows: false,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        cssEase: "linear"
+    }
+
+    const banners = useSelector(({ banners }: any) => banners.Banners)
+
+    useEffect(() => {
+        dispatch(fetchBanners())
+    }, [])
 
     return (
         <DashboardMember>
             <div className="py-8 px-24">
                 <div className="banner">
-                    <Image
-                        src={banner}
-                        width={100}
-                        height={50}
-                        alt="banner"
-                        layout="responsive"
-                        className="object-cover"
-                    />
+                    <Slider {...settings}>
+                        {banners && banners?.map((item: any) => (
+                            <div key={item.id} className="">
+                                <Image
+                                    loader={myLoader}
+                                    src={item.img}
+                                    width={100}
+                                    height={50}
+                                    alt="banner"
+                                    layout="responsive"
+                                    className="object-cover"
+                                />
+                            </div>
+                        ))}
+                    </Slider>
                 </div>
 
                 <div className="news mt-12">
@@ -191,5 +224,9 @@ const Home = () => {
         </DashboardMember>
     )
 }
+
+Home.getInitialProps = wrapper.getInitialPageProps(store => () => {
+    store.dispatch(fetchBanners())
+})
 
 export default Home

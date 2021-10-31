@@ -1,0 +1,55 @@
+.divider {
+    background-color: #FF9F1C;
+}
+
+.filter {
+    background-color: #283246;
+}
+
+.colorYellow {
+    color: #FF9F1C;
+}
+
+.input {
+    background-color: #ffff;
+}
+
+.filter {
+    color: #FF9F1C;
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 1em;
+    overflow: hidden;
+
+    td, th {
+        text-align: left;
+        padding: 18px;
+      }
+
+    td {
+        background-color: #252633;
+    }
+
+    .thead {
+        background-color: #283246;
+    }
+
+    .tbody {
+        border-bottom: 1px solid #303355 ;
+        color: #FF9F1C;
+    }
+
+    .badgePrimary {
+        background-color: #F4F4F4;
+        color: #283246;
+    }
+
+    .badgeSecondary {
+        background-color: #283246;
+        color: #FF9F1C;
+    }
+}
+

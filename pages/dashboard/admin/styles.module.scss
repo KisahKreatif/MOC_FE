@@ -17,6 +17,39 @@
     to {transform: translateX(-400px);}
 }
 
+@keyframes slideIn2 {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut2 {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-20px);
+        opacity: 0;
+        display: hidden;
+    }
+}
+
+.profile {
+    animation: slideIn2 .5s;
+}
+
+.profileHide {
+    display: hidden;
+    animation: slideOut2 .5s;
+    opacity: 0;
+}
+
 .sidebar {
     background-color: #151622;
     animation: slideIn .5s;

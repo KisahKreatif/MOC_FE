@@ -1,0 +1,38 @@
+.divider {
+    background-color: #FF9F1C;
+}
+
+.ActiveBadge {
+    background-color: #FF9F1C;
+}
+
+.input {
+    background-color: #252633;
+}
+
+.filter {
+    color: #FF9F1C;
+}
+
+.card {
+    background-color: #ffff;
+    color: black;
+    
+    .badgePrimary {
+        background-color: #FF9F1C;
+        color: #ffff;
+    }
+    .badgeSecondary {
+        background-color: #283246;
+        color: #ffff;
+    }
+    .badgeThird {
+        background-color: #A927F9;
+        color: #ffff;
+    }
+
+    .price {
+        color: #FF9F1C;
+    }
+}
+

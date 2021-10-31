@@ -1,0 +1,77 @@
+.input {
+    background-color: #252633;
+}
+
+.filter {
+    color: #FF9F1C;
+}
+
+.table {
+    border-collapse: collapse;
+    // width: 100%;
+    border-radius: 1em;
+    white-space: nowrap;
+    // overflow: hidden;
+
+    td, th {
+        text-align: center;
+        padding: 18px;
+      }
+
+    td {
+        background-color: #252633;
+    }
+
+    .thead {
+        background-color: #283246;
+    }
+
+    tbody {
+        border-bottom: 1px solid #303355 ;
+        color: #FF9F1C;
+    }
+
+    .badgePrimary {
+        background-color: #188DE2;
+        color: #ffff;
+    }
+
+    .badgeSecondary {
+        background-color: #F48116;
+        color: #ffff;
+    }
+    
+    .statusBtn {
+        background-color: #F44141;
+        color: #ffff;
+    }
+    
+    .actionBtn {
+        background-color: #283246;
+        color: #F48116;
+    }
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes slideIn {
+    from {transform: translateY(100px);}
+    to {transform: translateY(0);}
+}
+
+.modal {
+    background-color: rgba(0,0,0,0.5);
+    color: black;
+    animation: fadeIn .5s;
+
+    .modalContent {
+        animation: slideIn .7s;
+
+        .btn {
+            color:#ffff;
+        }
+    }
+}

@@ -27,15 +27,33 @@ const DashboardMember = ({ children }: any) => {
     const [childAfliasi, setChildAfliasi] = useState(false)
     const [childOrder, setChildOrder] = useState(false)
     const [sideNavAbsolute, setSideNavAbsolute] = useState(false)
+    const [profile, setProfile] = useState(false)
+
+    useEffect(() => {
+        const role = localStorage.getItem('role')
+        const access_token = localStorage.getItem('access_token')
+        if (!access_token) {
+            router.push('/auth/login')
+        }
+        if (role !== 'member') {
+            if (role === 'admin') {
+                router.push('/dashboard/admin/home')
+            }
+        }
+    }, [])
 
     const goTo = (routeName: any) => {
         if (routeName === '/dashboard/member/my-order/course') {
-            console.log('here');
             setSideNavAbsolute(true)
         } else setSideNavAbsolute(false)
         console.log(sideNavAbsolute, "<< sideNavAbsolute");
 
         router.push(routeName)
+    }
+
+    const logout = () => {
+        localStorage.clear()
+        router.push('/auth/login')
     }
 
     return (
@@ -103,12 +121,12 @@ const DashboardMember = ({ children }: any) => {
                                     </a>
                                 </Link>
                             </li>
-                            <li className="flex gap-2 items-center" >
+                            <li className="flex gap-2 items-center relative" >
                                 <div className="w-px h-8 bg-gray-400"></div>
                                 <div className="w-12 h-12 rounded-full bg-gray-100"></div>
                                 <div style={{ color: "#FF9F1C" }}>
                                     <p className="text-md font-bold">Testing Account</p>
-                                    <div className="flex gap-4 items-center cursor-pointer">
+                                    <div onClick={() => setProfile(!profile)} className="flex gap-4 items-center cursor-pointer">
                                         <p className="text-sm">Member</p>
                                         <Image
                                             src={chevrontD}
@@ -117,6 +135,12 @@ const DashboardMember = ({ children }: any) => {
                                             alt="Icons"
                                         />
                                     </div>
+                                </div>
+                                <div className={`${profile ? `${Styles.profile}` : `${Styles.profileHide}`} absolute top-16 left-0 w-full bg-white text-black p-2 rounded-b-md`}>
+                                    <ul>
+                                        <li className="cursor-pointer mt-2">Profile</li>
+                                        <li className="cursor-pointer mt-2" onClick={logout}>Logout</li>
+                                    </ul>
                                 </div>
                             </li>
                         </ul>
@@ -319,7 +343,7 @@ const DashboardMember = ({ children }: any) => {
                     </ul>
                 </div>
 
-                <div className={`${sideBar ? "flex-grow" : ""}`}>
+                <div className={`${sideBar ? "w-4/5" : ""}`}>
                     {children}
                 </div>
             </div>

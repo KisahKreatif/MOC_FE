@@ -1,0 +1,65 @@
+.bgYellow {
+    background-color: #FF9F1C;
+}
+
+.yellow {
+    color: #FF9F1C;
+}
+
+.table {
+    border-collapse: collapse;
+    border-radius: 1em;
+    // width: 100%;
+    overflow: hidden;
+
+    td, th {
+        text-align: left;
+        padding: 18px;
+      }
+
+    td {
+        background-color: #252633;
+    }
+
+    .thead {
+        background-color: #283246;
+    }
+
+    .tbody {
+        border-bottom: 1px solid #303355 ;
+        color: #FF9F1C;
+    }
+
+    .badgePrimary {
+        background-color: #ffff;
+        color: black;
+    }
+    .badgeSecondary {
+        background-color: #283246;
+        color: #FF9F1C;
+    }
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes slideIn {
+    from {transform: translateY(100px);}
+    to {transform: translateY(0);}
+}
+
+.modal {
+    background-color: rgba(0,0,0,0.5);
+    color: black;
+    animation: fadeIn .5s;
+
+    .modalContent {
+        animation: slideIn .7s;
+
+        .btn {
+            color:#ffff;
+        }
+    }
+}
