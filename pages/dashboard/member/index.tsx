@@ -19,15 +19,20 @@ import Box from '../../../src/assets/svg/Box.svg';
 import group_share from '../../../src/assets/svg/group_share.svg';
 import chevrontD from '../../../src/assets/svg/chevront-D.svg';
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchCarts } from '../../../store/reducers/cart'
 
 const DashboardMember = ({ children }: any) => {
     const router = useRouter()
+    const dispatch = useDispatch()
     const [sideBar, setSideBar] = useState(false)
     const [childProduct, setChildProduct] = useState(false)
     const [childAfliasi, setChildAfliasi] = useState(false)
     const [childOrder, setChildOrder] = useState(false)
     const [sideNavAbsolute, setSideNavAbsolute] = useState(false)
     const [profile, setProfile] = useState(false)
+    const [notification, setNotification] = useState(false)
+    const carts = useSelector(({ carts }: any) => carts.Carts)
 
     useEffect(() => {
         const role = localStorage.getItem('role')
@@ -40,6 +45,11 @@ const DashboardMember = ({ children }: any) => {
                 router.push('/dashboard/admin/home')
             }
         }
+    }, [])
+
+    useEffect(() => {
+        const token = localStorage.getItem('access_token')
+        if (token) dispatch(fetchCarts(token))
     }, [])
 
     const goTo = (routeName: any) => {
@@ -86,28 +96,47 @@ const DashboardMember = ({ children }: any) => {
                     <nav>
                         <ul className="flex gap-8 items-center">
                             <li>
-                                <Link href="/">
-                                    <a>
+                                <Link href="/dashboard/cart">
+                                    <a className="relative">
                                         <Image
                                             src={Cart}
                                             width={30}
                                             height={30}
                                             alt="MOC Logo"
                                         />
+                                        <div className="absolute w-full h-full -top-4 right-0 flex justify-end">
+                                            <div className="w-4 h-4 rounded-full bg-red-600 z-20 text-xs text-center">
+                                                {carts?.length}
+                                            </div>
+                                        </div>
                                     </a>
                                 </Link>
                             </li>
-                            <li>
-                                <Link href="/">
-                                    <a>
-                                        <Image
-                                            src={Bell}
-                                            width={30}
-                                            height={30}
-                                            alt="MOC Logo"
-                                        />
-                                    </a>
-                                </Link>
+                            <li className="relative">
+                                <Image
+                                    src={Bell}
+                                    width={30}
+                                    height={30}
+                                    alt="MOC Logo"
+                                    className="cursor-pointer"
+                                    onClick={() => setNotification(!notification)}
+                                />
+                                {notification && (
+                                    <div className="absolute shadow-lg right-0 w-96 p-2 rounded-md bg-white text-black">
+                                        <ul>
+                                            <li className="border-b-2 p-2 border-gray-300">
+                                                <p className="font-bold">Admin MOC</p>
+                                                <p className="text-sm">Selamat Bergabung dengan keluarga MOC Member</p>
+                                                <div className="flex justify-end mt-4">
+                                                    <p className="text-sm text-gray-400">4 menit yang lalu</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div className="cursor-pointer mt-4 bg-yellow-400 rounded-md p-2 text-white text-center font-bold">
+                                            Cek semua notifikasi
+                                        </div>
+                                    </div>
+                                )}
                             </li>
                             <li>
                                 <Link href="/">
@@ -137,7 +166,7 @@ const DashboardMember = ({ children }: any) => {
                                     </div>
                                 </div>
                                 <div className={`${profile ? `${Styles.profile}` : `${Styles.profileHide}`} absolute top-16 left-0 w-full bg-white text-black p-2 rounded-b-md`}>
-                                    <ul>
+                                    <ul className={profile ? '' : 'hidden'}>
                                         <li className="cursor-pointer mt-2">Profile</li>
                                         <li className="cursor-pointer mt-2" onClick={logout}>Logout</li>
                                     </ul>

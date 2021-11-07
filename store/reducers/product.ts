@@ -19,10 +19,10 @@ export default function productReducer(state = initialState, action: any) {
     }
 }
 
-export function fetchProducts(name: any, all: any, category: any = '') {
+export function fetchProducts(name: any, all: any, category: any = '', sort: any = '') {
     return async (dispatch: any) => {
         dispatch(setProductsLoading(true))
-        const res = await fetch(`${process.env.apiUrl}/product/fisik?name=${name}&all=${all}&category=${category}`)
+        const res = await fetch(`${process.env.apiUrl}/product/fisik?name=${name}&all=${all}&category=${category}&sort=${sort}`)
         const json = await res.json()
 
         if (json.meta.code === 200) {

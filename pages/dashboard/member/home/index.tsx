@@ -12,10 +12,10 @@ import { fetchBanners } from '../../../../store/reducers/banner'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import myLoader from '../../../../src/helpers/loadImage'
+import { fetchNews } from '../../../../store/reducers/news'
 
 const Home: NextPage = () => {
     const dispatch = useDispatch()
-    const news = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     const settings: Settings = {
         infinite: true,
         arrows: false,
@@ -28,9 +28,11 @@ const Home: NextPage = () => {
     }
 
     const banners = useSelector(({ banners }: any) => banners.Banners)
+    const news = useSelector(({ news }: any) => news.News)
 
     useEffect(() => {
         dispatch(fetchBanners())
+        dispatch(fetchNews('', true))
     }, [])
 
     return (
@@ -61,26 +63,29 @@ const Home: NextPage = () => {
                     </div>
 
                     <div className={`${Styles.newsContent} mt-8 rounded-lg p-8 bg-gray-100`}>
-                        {news.map((el: any) => (
+                        {news && news?.map((el: any) => (
                             <div
-                                key={el}
+                                key={el.id}
                                 className=""
                             >
                                 <div
-                                    className={`${el > 1 ? "mt-8" : ""} flex gap-4 items-center`}
+                                    className={`mt-8 flex gap-4 items-center`}
                                 >
                                     <div className="">
-                                        <Image
-                                            src={banner2}
-                                            width={200}
-                                            height={100}
-                                            alt="banner"
-                                            className="object-cover"
-                                        />
+                                        {el?.img && (
+                                            <Image
+                                                loader={myLoader}
+                                                src={el?.img}
+                                                width={200}
+                                                height={100}
+                                                alt="banner"
+                                                className="object-cover"
+                                            />
+                                        )}
                                     </div>
                                     <div className="">
-                                        <p className="text-lg">Berita {el}</p>
-                                        <p className="text-xl">JUALAN ONLINE DAPAT EMAS GRATIS SEBANYAK BANYAKNYA!! </p>
+                                        <p className="text-lg">{el?.judul}</p>
+                                        <p className="text-xl">{el?.deskripsi}</p>
                                     </div>
                                 </div>
                                 <div className="h-px bg-gray-300 mt-2"></div>
@@ -227,6 +232,7 @@ const Home: NextPage = () => {
 
 Home.getInitialProps = wrapper.getInitialPageProps(store => () => {
     store.dispatch(fetchBanners())
+    store.dispatch(fetchNews('', true))
 })
 
 export default Home

@@ -1,0 +1,66 @@
+.divider {
+    background-color: #FF9F1C;
+}
+
+.yellow {
+    color: #FF9F1C;
+}
+
+.bgYellow {
+    background-color: #FF9F1C;
+}
+
+.filter {
+    color: #FF9F1C;
+}
+
+.allProduct {
+    color: #FF9F1C;
+}
+
+.card {
+    background-color: #ffff;
+    color: black;
+    
+    .badge {
+        background-color: #73BB17;
+        color: #ffff;
+    }
+
+    .price {
+        color: #FF9F1C;
+    }
+}
+
+.btn {
+    background-color: #FF9F1C;
+    color: #ffff;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes slideIn {
+    from {transform: translateY(100px);}
+    to {transform: translateY(0);}
+}
+
+.modal {
+    background-color: rgba(0,0,0,0.5);
+    color: black;
+    animation: fadeIn .5s;
+
+    .modalContent {
+        animation: slideIn .7s;
+
+        .btn {
+            color:#ffff;
+        }
+    }
+}
+
+.slide {
+    transition: .5s;
+}
