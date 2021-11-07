@@ -2,7 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   env: {
-    // apiUrl: 'http://localhost:8000/api'
-    apiUrl: 'http://next.bemkmipb.org/api'
+    // apiUrl: 'http://localhost:8000/api',
+    apiUrl: 'https://app.mocmembership.com/api'
   }
 }
