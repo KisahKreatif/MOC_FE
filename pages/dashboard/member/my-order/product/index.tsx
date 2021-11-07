@@ -5,10 +5,80 @@ import Styles from './styles.module.scss'
 import filter from '../../../../../src/assets/svg/filter.svg'
 import ILClose from '../../../../../src/assets/svg/ILClose.svg'
 import bca from '../../../../../src/assets/images/bca.png'
+import { NextPage } from 'next'
+import wrapper from '../../../../../store'
+import { fetchTransactions } from '../../../../../store/reducers/transaction'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import router from 'next/router'
+import swal from 'sweetalert'
+import axios from 'axios'
 
-const MyOrderProduct = () => {
+const MyOrderProduct: NextPage = () => {
+    const dispatch = useDispatch()
+
     const [modal, setModal] = useState(false)
     const [modal2, setModal2] = useState(false)
+    const [image, setImage] = useState('')
+    const [search, setSearch] = useState<any>('')
+    const [selected, setSelected] = useState<any>({})
+    const [accessToken, setAccessToken] = useState<any>('')
+
+    const transactions = useSelector(({ transaction }: any) => transaction.Transactions)
+
+    useEffect(() => {
+        const token = localStorage.getItem('access_token')
+        if (token) {
+            dispatch(fetchTransactions('', token))
+            setAccessToken(token)
+        }
+    }, [])
+
+    useEffect(() => {
+        const token = localStorage.getItem('access_token')
+        if (search?.length > 3) dispatch(fetchTransactions('', token, search))
+        if (search?.length < 1) dispatch(fetchTransactions('', token))
+    }, [search])
+
+    const uploadFile = async (e: any) => {
+        let file = e.target.files;
+
+        try {
+            const data: any = {
+                'product_id': selected?.product_id,
+                'delivery_id': selected.delivery_id,
+                'kupon_id': selected?.kupon_id ? selected?.kupon_id : null,
+                'kode': selected.kode,
+                'price': selected.price,
+                'kuantiti': selected.kuantiti,
+                'point_pembeli': selected.point_pembeli,
+                'point_sponsor': selected.point_sponsor,
+                'commission': selected.commission,
+                'discount': selected.discount,
+                'status': selected.status,
+            }
+
+
+            if (file && selected?.id) {
+                const formData = new FormData()
+
+                Object.keys(data).map(key => {
+                    formData.append(key, data[key])
+                })
+                Object.keys(file).map(key => {
+                    formData.append('image', file[key])
+                })
+
+                if (accessToken) {
+                    const res = await axios.post(`${process.env.apiUrl}/transaction/${selected.id}`, formData, { headers: { authorization: accessToken } })
+
+                    if (res.data.meta.code == 200) swal('Success upload')
+                }
+            } else throw { message: '' }
+        } catch (error: any) {
+            swal(`Ooopss!! somrthing error = ${error?.message}`)
+        }
+    }
 
     return (
         <DashboardMember>
@@ -19,7 +89,7 @@ const MyOrderProduct = () => {
                         <p className="text-2xl font-bold">MY ORDER (PRODUCT)</p>
                     </div>
                     <div className="flex gap-4">
-                        <input type="text" name="search" className={`${Styles.input} px-4 py-2 rounded-lg`} placeholder="Cari Produk" />
+                        <input type="text" name="search" className={`${Styles.input} px-4 py-2 rounded-lg`} placeholder="Search" value={search} onChange={e => setSearch(e.currentTarget.value)} />
                         <div className={`${Styles.input} flex gap-4 cursor-pointer py-2 px-4`}>
                             <Image
                                 src={filter}
@@ -41,6 +111,7 @@ const MyOrderProduct = () => {
                                 <th className="w-1/4">Point Pembeli</th>
                                 <th className="w-1/4">Kuantiti</th>
                                 <th className="w-1/2">Detail Pengiriman</th>
+                                <th className="w-1/2">Link Pembayaran</th>
                                 <th className="w-full">Kupon</th>
                                 <th className="w-1/4">Tanggal Beli</th>
                                 <th className="w-1/4">Tanggal Tiba</th>
@@ -49,42 +120,62 @@ const MyOrderProduct = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className={`${Styles.tbody}`} >
-                                <td>1.</td>
-                                <td>Danuar Riyaldi</td>
-                                <td>Produk 1</td>
-                                <td>940 Transaksi</td>
-                                <td>940 Transaksi</td>
-                                <td>
-                                    <div
-                                        className={`${Styles.badgePrimary} rounded-md py-2 px-2 cursor-pointer`}
-                                        onClick={() => {
-                                            setModal2(false)
-                                            setModal(true)
-                                        }}
-                                    >
-                                        <p className="text-xs text-center">Detail Pengiriman</p>
-                                    </div>
-                                    <div
-                                        className={`${Styles.badgeSecondary} rounded-md py-2 px-2 mt-2 cursor-pointer`}
-                                        onClick={() => {
-                                            setModal(true)
-                                            setModal2(true)
-                                        }}
-                                    >
-                                        <p className="text-xs text-center">Detail Penerima</p>
-                                    </div>
-                                </td>
-                                <td>940 Transaksi</td>
-                                <td>940 Transaksi</td>
-                                <td>940 Transaksi</td>
-                                <td>940 Transaksi</td>
-                                <td>
-                                    <div className={`${Styles.statusBtn} rounded-md py-2 px-4 cursor-pointer`}>
-                                        <p className="text-xs text-center">Pesanan ditolak</p>
-                                    </div>
-                                </td>
-                            </tr>
+                            {transactions?.length > 0 && transactions?.map((item: any, i: any) => (
+                                <tr key={item.id} className={`${Styles.tbody}`} >
+                                    <td>{i + 1}.</td>
+                                    <td>{item?.product?.name}</td>
+                                    <td>{item?.product?.category}</td>
+                                    <td>{item?.product?.point_pembeli}</td>
+                                    <td>{item?.kuantiti}</td>
+                                    <td>
+                                        <div
+                                            className={`${Styles.badgePrimary} rounded-md py-2 px-2 cursor-pointer`}
+                                            onClick={() => {
+                                                setModal2(false)
+                                                setModal(true)
+                                            }}
+                                        >
+                                            <p className="text-xs text-center">Detail Pengiriman</p>
+                                        </div>
+                                        <div
+                                            className={`${Styles.badgeSecondary} rounded-md py-2 px-2 mt-2 cursor-pointer`}
+                                            onClick={() => {
+                                                setModal(true)
+                                                setModal2(true)
+                                            }}
+                                        >
+                                            <p className="text-xs text-center">Detail Penerima</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div
+                                            className={`${Styles.badgePrimary} rounded-md py-2 px-2 cursor-pointer`}
+                                            onClick={() => router.push({ pathname: `/dashboard/member/products/produk-fisik/transaction/${item.id}`, query: { type: 'non' } })}
+                                        >
+                                            <p className="text-xs text-center">Detail Pembayaran</p>
+                                        </div>
+                                        <div className="py-2">
+                                            <label
+                                                htmlFor="file-upload"
+                                                className={`${Styles.badgeSecondary} text-xs text-center rounded-md py-2 px-2 mt-2 cursor-pointer`}
+                                                onClick={() => setSelected(item)}
+                                            >
+                                                Upload Bukti Bayar
+                                            </label>
+                                            <input id="file-upload" accept=".jpeg, .png, .jpg" type="file" className={Styles.inputFile} onChange={uploadFile} value={image} />
+                                        </div>
+                                    </td>
+                                    <td>{item?.coupon?.name}</td>
+                                    <td>{new Date(item?.created_at).getDate()}-{new Date(item?.created_at).getMonth()}-{new Date(item?.created_at).getFullYear()}</td>
+                                    <td>{item?.arrived_at ? `${new Date(item?.arrived_at).getDate()}-${new Date(item?.arrived_at).getMonth()}-${new Date(item?.arrived_at).getFullYear()}` : '-'}</td>
+                                    <td>{item?.price ? Number(item.price).toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') : '-'}</td>
+                                    <td>
+                                        <div className={`${Styles.statusBtn} rounded-md py-2 px-4 cursor-pointer`}>
+                                            <p className="text-xs text-center">{item?.status}</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
@@ -148,5 +239,9 @@ const MyOrderProduct = () => {
         </DashboardMember>
     )
 }
+
+// MyOrderProduct.getInitialProps = wrapper.getInitialPageProps(store => () => {
+//     store.dispatch(fetchTransactions('', ))
+// })
 
 export default MyOrderProduct

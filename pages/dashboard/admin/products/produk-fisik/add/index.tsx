@@ -27,7 +27,7 @@ interface FormVariant {
 const AddProdukFisik = () => {
     const router = useRouter()
 
-    const [form, setForm] = useState<Form | any>({ name: '', desc: '', berat: 0, length: 0, width: 0, height: 0, point_pembeli: 0, point_sponsor: 0, commission: 0, category: '' })
+    const [form, setForm] = useState<Form | any>({ name: '', desc: '', berat: 0, length: 0, width: 0, height: 0, point_pembeli: 0, point_sponsor: 0, commission: 0, category: 'skincare' })
     const [variants, setVariants] = useState<any[]>([])
     const [image, setImage] = useState<object | any>({})
     const [loading, setLoading] = useState(false)

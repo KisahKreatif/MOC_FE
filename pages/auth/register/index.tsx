@@ -79,7 +79,7 @@ const Register = () => {
 
                     <input type="text" name="email" id="email" placeholder="email" className="mt-2 p-2 rounded-md border-2 border-gray-300 w-96" value={form.email} onChange={onChange} /><br />
 
-                    <input type="text" name="password" id="password" placeholder="password" className="p-2 rounded-md border-2 border-gray-300 w-96 mt-4" value={form.password} onChange={onChange} /><br />
+                    <input type="password" name="password" id="password" placeholder="password" className="p-2 rounded-md border-2 border-gray-300 w-96 mt-4" value={form.password} onChange={onChange} /><br />
 
                     {!matchedPass && (
                         <div className="mt-4 p-2 rounded-md bg-red-600 text-white">
@@ -87,7 +87,7 @@ const Register = () => {
                         </div>
                     )}
 
-                    <input type="text" name="password_confirmation" id="password_confirmation" placeholder="password confirmation" className="p-2 rounded-md border-2 border-gray-300 w-96 mt-4" value={form.password_confirmation} onChange={onChange} /><br />
+                    <input type="password" name="password_confirmation" id="password_confirmation" placeholder="password confirmation" className="p-2 rounded-md border-2 border-gray-300 w-96 mt-4" value={form.password_confirmation} onChange={onChange} /><br />
 
                     <input name="alamat" id="alamat" placeholder="address" className="p-2 rounded-md border-2 border-gray-300 h-24 w-96 mt-4" value={form.alamat} onChange={onChange} /><br />
 

@@ -3,6 +3,7 @@ import Image from "next/image"
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import swal from "sweetalert"
 import DashboardMember from "../.."
 import ImageProduct1 from '../../../../../src/assets/images/product-1.png'
 import ImageProduct2 from '../../../../../src/assets/images/product-2.png'
@@ -18,9 +19,10 @@ const ProdukFisik: NextPage = () => {
     const router = useRouter()
     const dispatch = useDispatch()
 
-    const [category, setCategory] = useState([{ id: 1, name: 'Skincare', slug: 'skincare' }, { id: 2, name: 'Supplement', slug: 'supplement' }, { id: 3, name: 'F&B', slug: 'f and b' }, { id: 4, name: 'Fashion', slug: 'fashion' }])
-    const [selectedCatergory, setSelectedCategory] = useState<any>({ id: 1, name: 'Skincare', slug: 'skincare' })
+    const [category, setCategory] = useState([{ id: 1, name: 'Skincare', slug: 'skincare' }, { id: 2, name: 'Supplement', slug: 'supplement' }, { id: 3, name: 'F&B', slug: 'f dan b' }, { id: 4, name: 'Fashion', slug: 'fashion' }])
+    const [selectedCatergory, setSelectedCategory] = useState({ id: 1, name: 'Skincare', slug: 'skincare' })
     const [search, setSearch] = useState('')
+    const [filterOpc, setFilter] = useState(false)
 
     const products = useSelector(({ products }: any) => products.Products)
 
@@ -44,6 +46,11 @@ const ProdukFisik: NextPage = () => {
         router.push(routeName)
     }
 
+    const sort = (str: any) => {
+        dispatch(fetchProducts('', true, selectedCatergory.slug, str))
+        setFilter(false)
+    }
+
 
     return (
         <DashboardMember>
@@ -58,14 +65,28 @@ const ProdukFisik: NextPage = () => {
                         <div className="">
                             <input type="text" name="search" id="search" value={search} onChange={e => setSearch(e.currentTarget.value)} placeholder="Cari Produk" className={`${Styles.input} text-white drop-shadow-xl px-4 py-2 rounded-md`} />
                         </div>
-                        <div className={`${Styles.input} drop-shadow-xl	 rounded-md flex gap-4 cursor-pointer py-2 px-4`}>
-                            <Image
-                                src={filter}
-                                width={20}
-                                height={20}
-                                alt="icon"
-                            />
-                            <p className={Styles.filter}>Filter</p>
+                        <div className="relative">
+                            <div
+                                onClick={() => setFilter(!filterOpc)}
+                                className={`${Styles.input} shadow-xl	 rounded-md flex gap-4 cursor-pointer py-2 px-4`}
+                            >
+                                <Image
+                                    src={filter}
+                                    width={20}
+                                    height={20}
+                                    alt="icon"
+                                />
+                                <p className={Styles.filter}>Filter</p>
+                            </div>
+                            {filterOpc && (
+                                <div className="absolute right-0 p-4 rounded-md bg-white w-40">
+                                    <ul>
+                                        <li onClick={() => sort('latest')} className="cursor-pointer text-black">Terbaru</li>
+                                        <li onClick={() => sort('highest')} className="cursor-pointer text-black mt-2">Harga Tertinggi</li>
+                                        <li onClick={() => sort('lowest')} className="cursor-pointer text-black mt-2">Harga Terendah</li>
+                                    </ul>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -19,10 +19,10 @@ export default function courseReducer(state = initialState, action: any) {
     }
 }
 
-export function fetchCourses(name: any, all: any, sort: any = '') {
+export function fetchCourses(name: any, all: any, sort: any = '', limit: any = 9) {
     return async (dispatch: any) => {
         dispatch(setCoursesLoading(true))
-        const res = await fetch(`${process.env.apiUrl}/product/course?name=${name}&all=${all}&sort=${sort}`)
+        const res = await fetch(`${process.env.apiUrl}/product/course?name=${name}&all=${all}&sort=${sort}&limit=${limit}`)
         const json = await res.json()
 
         if (json.meta.code === 200) {
