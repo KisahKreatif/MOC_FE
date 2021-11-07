@@ -94,6 +94,7 @@ const ProdukFisik: NextPage = () => {
                 <div className="flex gap-4 mt-4">
                     {category.map(el => (
                         <div
+                            key={el.id}
                             className={`${selectedCatergory?.id == el.id ? Styles.ActiveBadge : 'border-2 border-gray-400'} px-6 cursor-pointer py-2 rounded-md`}
                             onClick={() => filterByCategory(el)}
                         >
