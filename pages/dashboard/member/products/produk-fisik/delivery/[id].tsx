@@ -25,6 +25,7 @@ const Delivery: NextPage = () => {
 
     const [modal, setModal] = useState(false)
     const [slide, setSlide] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [variant, setVariant] = useState<any>({})
     const [provinces, setProvinces] = useState<any[]>([])
     const [cities, setCities] = useState<any[]>([])
@@ -85,6 +86,7 @@ const Delivery: NextPage = () => {
     }
 
     const submit = async () => {
+        setLoading(true)
         try {
             const query = JSON.parse(JSON.stringify(router.query))
             const getProduct = JSON.parse(query.product)
@@ -157,6 +159,7 @@ const Delivery: NextPage = () => {
         } catch (error: any) {
             swal(`Error = ${error?.message}`)
         }
+        setLoading(false)
     }
 
     return (
@@ -299,13 +302,18 @@ const Delivery: NextPage = () => {
                             <div className=""></div>
                         )}
 
+
                         <div className="mt-4">
-                            <div
-                                className={`${Styles.bgYellow} px-4 mt-2 py-2 rounded-md cursor-pointer text-center`}
-                                onClick={submit}
-                            >
-                                <p className={`text-white font-bold`}>Lanjut</p>
-                            </div>
+                            {loading ? (
+                                <div className={`${Styles.bgYellow} px-4 mt-2 py-2 rounded-md text-center`}>Loading....</div>
+                            ) : (
+                                <div
+                                    className={`${Styles.bgYellow} px-4 mt-2 py-2 rounded-md cursor-pointer text-center`}
+                                    onClick={submit}
+                                >
+                                    <p className={`text-white font-bold`}>Lanjut</p>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

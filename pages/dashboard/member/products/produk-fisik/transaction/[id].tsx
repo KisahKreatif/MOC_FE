@@ -34,7 +34,6 @@ const Delivery: NextPage = () => {
             dispatch(fetchTransaction(router.query.type, +id, token))
         }
         console.log(transaction, "<< transaction");
-
     }, [id])
 
     const goTo = (routeName: any) => {
@@ -135,11 +134,17 @@ const Delivery: NextPage = () => {
                                         <p className="mt-2 text-black text-sm">Pastikan nominal sesuai hingga 1 digit terakhir</p>
                                     </div>
                                     <div className="mt-2 w-full">
-                                        <div className={`${Styles.bgYellow} w-full h-12 flex items-center justify-center py-2 px-4 rounded-md cursor-pointer text-white font-bold`}>
+                                        <div
+                                            className={`${Styles.bgYellow} w-full h-12 flex items-center justify-center py-2 px-4 rounded-md cursor-pointer text-white font-bold`}
+                                            onClick={() => setModal(true)}
+                                        >
                                             Lihat Detail
                                         </div>
 
-                                        <div className={`border-2 mt-4 ${Styles.borderYellow} ${Styles.yellow} w-full h-12 flex items-center justify-center py-2 px-4 rounded-md cursor-pointer font-bold`}>
+                                        <div
+                                            className={`border-2 mt-4 ${Styles.borderYellow} ${Styles.yellow} w-full h-12 flex items-center justify-center py-2 px-4 rounded-md cursor-pointer font-bold`}
+                                            onClick={() => router.push(`/dashboard/member/my-order/product`)}
+                                        >
                                             Lihat My Order
                                         </div>
                                     </div>
@@ -164,8 +169,10 @@ const Delivery: NextPage = () => {
                 )}
 
                 <div className={`fixed top-0 left-0 w-full h-full z-50 flex items-center justify-center ${modal ? Styles.modal : "hidden"}`}>
-                    <div className={`${Styles.modalContent} p-4 rounded-xl bg-gray-100`}>
-                        <div className="flex justify-end">
+                    <div className={`${Styles.modalContent} md:w-3/5 p-4 rounded-xl bg-gray-100`}>
+                        <div className="flex justify-between">
+                            <div className=""></div>
+                            <p className="text-xl font-bold">Detail Pembayaran</p>
                             <Image
                                 src={ILClose}
                                 width={20}
@@ -174,16 +181,51 @@ const Delivery: NextPage = () => {
                                 onClick={() => setModal(false)}
                             />
                         </div>
-                        <p className="text-xl text-center font-bold">Berhasil ditambahkan kekeranjang</p>
-                        <div className="mt-4 p-4 shadow-lg rounded-lg flex items-center gap-4 md:gap-8">
-
-                            <div className="">
+                        <div className="mt-4">
+                            <div className="flex justify-between items-center">
+                                <div className="">
+                                    <p className="text-lg text-gray-400">Total Harga [1 barang]</p>
+                                </div>
+                                <div className="">
+                                    <p className="text-lg text-black">Rp {transaction?.price ? Number(transaction?.price).toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') : 0}</p>
+                                </div>
                             </div>
-                            <div
-                                className={`${Styles.bgYellow} px-4 py-2 rounded-lg font-bold text-white cursor-pointer`}
-                                onClick={() => goTo("/dashboard/cart")}
-                            >
-                                Lihat Keranjang
+                            <div className="flex justify-between items-center mt-2">
+                                <div className="">
+                                    <p className="text-lg text-gray-400">Total Ongkos Kirim</p>
+                                </div>
+                                <div className="">
+                                    <p className="text-lg text-black">Rp {transaction?.delivery?.ongkir ? Number(transaction?.delivery?.ongkir).toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') : 0}</p>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-between items-center mt-2">
+                                <div className="">
+                                    <p className="text-lg text-gray-400">Kode Unik</p>
+                                </div>
+                                <div className="">
+                                    <p className="text-lg text-red-600">+Rp{transaction?.price ? String(transaction?.price).substring(String(transaction?.price).length - 3, transaction?.price) : '-'}</p>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-between items-center mt-2">
+                                <div className="">
+                                    <p className="text-lg text-gray-400">Status Pembayaran</p>
+                                </div>
+                                <div className="">
+                                    <p className="text-lg text-black">{transaction?.status == 'pembayaran' ? 'Menunggu Pembayaran' : transaction?.status}</p>
+                                </div>
+                            </div>
+
+                            <div className="h-px w-full bg-gray-300 mt-4"></div>
+
+                            <div className="flex justify-between items-center py-4">
+                                <div className="">
+                                    <p className="text-xl text-black font-bold">Total Bayar</p>
+                                </div>
+                                <div className="">
+                                    <p className={`${Styles.yellow} font-bold text-xl`}>Rp {transaction?.price ? Number(transaction?.price).toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') : 0}</p>
+                                </div>
                             </div>
                         </div>
                     </div>

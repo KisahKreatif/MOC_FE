@@ -427,6 +427,19 @@ const DashboardAdmin = ({ children }: any) => {
                                 </li>
                             </ul>
                         </li>
+                        <li className={`${Styles.sideNav} px-4 py-2 mt-4 rounded-lg cursor-pointer`}>
+                            <Link href="/dashboard/admin/paket">
+                                <a className="flex gap-4 items-center">
+                                    <Image
+                                        src={ScanAlt}
+                                        alt="Icon"
+                                        width={30}
+                                        height={30}
+                                    />
+                                    <p className="hidden md:flex">Paket</p>
+                                </a>
+                            </Link>
+                        </li>
                     </ul>
                 </div>
 

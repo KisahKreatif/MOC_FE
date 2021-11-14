@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import myLoader from "../../../../../src/helpers/loadImage"
 
+
 const ProductCourse: NextPage = () => {
     const dispatch = useDispatch()
     const router = useRouter()
@@ -45,6 +46,8 @@ const ProductCourse: NextPage = () => {
     const goTo = (routeName: any) => {
         router.push(routeName)
     }
+
+
 
     return (
         <DashboardMember>
@@ -110,7 +113,11 @@ const ProductCourse: NextPage = () => {
                             <div className="mt-4">
                                 <p className="text-xl font-bold">{el?.name}</p>
                                 <div className="py-2 flex gap-4">
-                                    <div className={`${Styles.badgePrimary} py-2 rounded-md w-16 cursor-pointer text-center text-xs`}>Add</div>
+                                    <div
+                                        className={`${Styles.badgePrimary} py-2 rounded-md w-16 cursor-pointer text-center text-xs`}
+                                        onClick={() => goTo(`/dashboard/admin/products/course/bab/${el.id}`)}
+                                    >
+                                        Add</div>
                                     <div className={`${Styles.badgeSecondary} py-2 rounded-md w-16 cursor-pointer text-center text-xs`}>Delete</div>
                                     <div
                                         className={`${Styles.badgeThird} py-2 rounded-md w-16 cursor-pointer text-center text-xs`}
@@ -143,6 +150,7 @@ const ProductCourse: NextPage = () => {
                     ))}
                 </div>
             </div>
+
         </DashboardMember>
     )
 }

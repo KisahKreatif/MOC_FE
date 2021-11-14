@@ -110,16 +110,15 @@ const ProdukFisik: NextPage = () => {
                                 />
                                 <p className="text-lg">5.0</p>
                             </div>
-                            <p className="text-2xl font-bold">Rp 1.755.000</p>
+                            <p className="text-2xl font-bold">Rp {course?.paket?.length > 0 ? course?.paket[0].price : '0'}</p>
                             <div className="h-px mt-4 bg-gray-300"></div>
                             <div className="mt-4">
-                                {/* <p className="font-bold text-lg">Course yang diperoleh:</p>
+                                <p className="font-bold text-lg">Course yang diperoleh:</p>
                                 <ul className="mt-4">
-                                    <li className="mt-2 text-lg">1. Product Knowledge</li>
-                                    <li className="mt-2 text-lg">2. 7 Days Private Mentoring</li>
-                                    <li className="mt-2 text-lg">3. Moc Membership</li>
-                                    <li className="mt-2 text-lg">4. Master Secrets Hack</li>
-                                </ul> */}
+                                    {course?.paket?.map((el: any, i: any) => (
+                                        <li className="mt-2 text-lg">{i + 1}. {el.name}</li>
+                                    ))}
+                                </ul>
                             </div>
                             <div className="h-px mt-4 bg-gray-300"></div>
                             <div className="mt-4 flex justify-between">
@@ -128,7 +127,9 @@ const ProdukFisik: NextPage = () => {
                                         <li className="mt-2 flex gap-4">
                                             <p className="w-48">Tanggal Publish</p>
                                             <p>:</p>
-                                            <p>24-May-2021</p>
+                                            {course?.created_at && (
+                                                <p>{new Date(course.created_at).getDate()}/{new Date(course.created_at).getMonth() + 1}/{new Date(course.created_at).getFullYear()}</p>
+                                            )}
                                         </li>
                                         <li className="mt-2 flex gap-4">
                                             <p className="w-48">Availability</p>
@@ -178,13 +179,15 @@ const ProdukFisik: NextPage = () => {
                                 <div className="mt-4">
                                     <p className="text-xl font-bold">{el?.name}</p>
                                     <div className="py-2">
-                                        <div className={`${Styles.badge} py-2 rounded-md w-28 text-center text-xs`}>Free Member</div>
+                                        {el?.paket[0]?.is_member == 1 && (
+                                            <div className={`${Styles.badge} py-2 rounded-md w-28 text-center text-xs`}>Free Member</div>
+                                        )}
                                     </div>
                                     <div className="py-1">
                                         <p className={`text-md`}>E-course</p>
                                     </div>
                                     <div className="flex justify-between items-center">
-                                        <p className={`${Styles.price} text-lg font-bold`}>Rp 1.755.000</p>
+                                        <p className={`${Styles.price} text-lg font-bold`}>Rp {el?.paket?.length > 0 ? el?.paket[0].price : '0'}</p>
                                         <div className="flex gap-1">
                                             <Image
                                                 src={star}

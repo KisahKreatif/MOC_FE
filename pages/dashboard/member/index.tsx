@@ -21,6 +21,8 @@ import chevrontD from '../../../src/assets/svg/chevront-D.svg';
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCarts } from '../../../store/reducers/cart'
+import { fetchCurrentUser } from "../../../store/reducers/user"
+import myLoader from "../../../src/helpers/loadImage"
 
 const DashboardMember = ({ children }: any) => {
     const router = useRouter()
@@ -33,6 +35,7 @@ const DashboardMember = ({ children }: any) => {
     const [profile, setProfile] = useState(false)
     const [notification, setNotification] = useState(false)
     const carts = useSelector(({ carts }: any) => carts.Carts)
+    const user = useSelector(({ user }: any) => user.CurrentUser)
 
     useEffect(() => {
         const role = localStorage.getItem('role')
@@ -49,7 +52,10 @@ const DashboardMember = ({ children }: any) => {
 
     useEffect(() => {
         const token = localStorage.getItem('access_token')
-        if (token) dispatch(fetchCarts(token))
+        if (token) {
+            dispatch(fetchCarts(token))
+            dispatch(fetchCurrentUser(token))
+        }
     }, [])
 
     const goTo = (routeName: any) => {
@@ -152,9 +158,19 @@ const DashboardMember = ({ children }: any) => {
                             </li>
                             <li className="flex gap-2 items-center relative" >
                                 <div className="w-px h-8 bg-gray-400"></div>
-                                <div className="w-12 h-12 rounded-full bg-gray-100"></div>
+                                <div className="w-12 h-12">
+                                    {user?.profile_photo_url && (
+                                        <Image
+                                            loader={myLoader}
+                                            src={user?.profile_photo_url}
+                                            width={50}
+                                            height={50}
+                                            className="rounded-full"
+                                        />
+                                    )}
+                                </div>
                                 <div style={{ color: "#FF9F1C" }}>
-                                    <p className="text-md font-bold">Testing Account</p>
+                                    <p className="text-md font-bold">{user.name}</p>
                                     <div onClick={() => setProfile(!profile)} className="flex gap-4 items-center cursor-pointer">
                                         <p className="text-sm">Member</p>
                                         <Image
@@ -327,19 +343,6 @@ const DashboardMember = ({ children }: any) => {
                                         height={30}
                                     />
                                     <p className="hidden md:flex">My Reward</p>
-                                </a>
-                            </Link>
-                        </li>
-                        <li className={`${Styles.sideNav} px-4 py-2 mt-4 rounded-lg cursor-pointer`}>
-                            <Link href="/dashboard/member/leader-board">
-                                <a className="flex gap-4 items-center">
-                                    <Image
-                                        src={File}
-                                        alt="Icon"
-                                        width={30}
-                                        height={30}
-                                    />
-                                    <p className="hidden md:flex">History Reward</p>
                                 </a>
                             </Link>
                         </li>

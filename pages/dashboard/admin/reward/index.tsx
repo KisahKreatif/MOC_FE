@@ -4,10 +4,36 @@ import DashboardMember from ".."
 import Styles from './styles.module.scss'
 import Reward from '../../../../src/assets/images/reward.png'
 import ILClose from '../../../../src/assets/svg/ILClose.svg'
+import swal from 'sweetalert'
+import myLoader from '../../../../src/helpers/loadImage'
 
 const MyReward = () => {
     const [modal, setModal] = useState(false)
     const [modal1, setModal1] = useState(false)
+
+    const [form, setForm] = useState<any>({})
+    const [image, setImage] = useState<any>({})
+
+    const onChange = (e: any) => {
+        const name = e.target.name
+        const value = e.target.value
+
+        setForm({ ...form, [name]: value })
+    }
+
+    const onChangeFile = (e: any) => {
+        const file = e.target.files[0]
+        setImage(file)
+    }
+
+    const onSubmit = async (e: any) => {
+        e.preventDefault()
+        try {
+            console.log(form, "<< form");
+        } catch (error: any) {
+            swal(`Something error ` + error.message)
+        }
+    }
 
     return (
         <DashboardMember>
@@ -19,7 +45,10 @@ const MyReward = () => {
                 <div className="mt-8 flex justify-end">
                     <div
                         className={`${Styles.bgYellow} cursor-pointer px-4 py-2 rounded-md`}
-                        onClick={() => setModal(true)}
+                        onClick={() => {
+                            setModal(true)
+                            setModal1(true)
+                        }}
                     >
                         Add
                     </div>
@@ -83,26 +112,29 @@ const MyReward = () => {
                         {modal1 ? (
                             <>
                                 <div className="flex justify-between items-center">
-                                    <p className={`${Styles.yellow} text-xl font-bold`}>Edit Reward</p>
-                                    <Image
-                                        src={ILClose}
-                                        width={20}
-                                        height={20}
-                                        onClick={() => setModal(false)}
-                                        className="cursor-pointer"
-                                    />
+                                    <p className={`${Styles.yellow} text-xl font-bold`}>Add / Edit Reward</p>
+                                    {form?.image && (
+                                        <Image
+                                            loader={myLoader}
+                                            src={form?.image}
+                                            width={20}
+                                            height={20}
+                                            onClick={() => setModal(false)}
+                                            className="cursor-pointer"
+                                        />
+                                    )}
                                 </div>
                                 <div className="mt-4">
-                                    <form>
-                                        <input type="text" name="" id="" className={`${Styles.yellow} bg-white rounded-md w-full py-2 px-4`} placeholder="Smartphone" />
+                                    <form onSubmit={onSubmit}>
+                                        <input type="text" name="judul" id="judul" className={`${Styles.yellow} bg-white rounded-md w-full py-2 px-4`} onChange={onChange} value={form?.judul} placeholder="Judul" />
 
-                                        <input type="file" name="" id="" className={`${Styles.yellow} bg-white rounded-md w-full py-2 px-4 mt-4`} />
+                                        <input type="file" name="image" id="image" onChange={onChangeFile} className={`${Styles.yellow} bg-white rounded-md w-full py-2 px-4 mt-4`} placeholder="Deskripsi" />
 
-                                        <textarea name="" id="" className={`${Styles.yellow} h-24 mt-4 bg-white rounded-md w-full py-2 px-4`} placeholder="Smartphone" />
+                                        <textarea name="desc" id="desc" onChange={onChange} value={form?.desc} className={`${Styles.yellow} h-24 mt-4 bg-white rounded-md w-full py-2 px-4`} placeholder="Deskripsi" />
 
-                                        <input type="text" name="" id="" className={`${Styles.yellow} mt-4 bg-white rounded-md w-full py-2 px-4`} placeholder="Smartphone" />
+                                        <input type="text" name="harga_point" id="harga_point" className={`${Styles.yellow} mt-4 bg-white rounded-md w-full py-2 px-4`} onChange={onChange} value={form?.harga_point} placeholder="Harga Point" />
 
-                                        <input type="date" name="" id="" className={`${Styles.yellow} mt-4 bg-white rounded-md w-full py-2 px-4`} placeholder="Smartphone" />
+                                        <input type="date" name="batas" id="batas" className={`${Styles.yellow} mt-4 bg-white rounded-md w-full py-2 px-4`} onChange={onChange} value={form?.batas} placeholder="Batas" />
 
 
                                         <input type="submit" value="Submit" className="text-white font-bold mt-4 px-8 py-3 bg-black rounded-md cursor-pointer" />

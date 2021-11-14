@@ -27,7 +27,7 @@ const MyReward = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className={`${Styles.tbody} cursor-pointer`} >
+                            {/* <tr className={`${Styles.tbody} cursor-pointer`} >
                                 <td>1.</td>
                                 <td>SmartPhone</td>
                                 <td>
@@ -64,7 +64,7 @@ const MyReward = () => {
                                         <p className="text-xs text-center">Sudah dipakai</p>
                                     </div>
                                 </td>
-                            </tr>
+                            </tr> */}
                         </tbody>
                     </table>
                 </div>

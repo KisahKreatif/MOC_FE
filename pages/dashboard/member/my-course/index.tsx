@@ -40,7 +40,7 @@ const ProdukFisik = () => {
                     </div>
                 </div>
                 <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {data.map((el: any) => (
+                    {/* {data.map((el: any) => (
                         <div
                             key={el.id}
                             className={`${Styles.card} p-4 rounded-lg cursor-pointer`}
@@ -59,7 +59,7 @@ const ProdukFisik = () => {
                             </div>
                         </div>
 
-                    ))}
+                    ))} */}
                 </div>
             </div>
         </DashboardMember>

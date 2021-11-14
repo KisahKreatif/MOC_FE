@@ -23,6 +23,8 @@ const Course: NextPage = () => {
 
     useEffect(() => {
         dispatch(fetchCourses('', true))
+        console.log(courses, "<< courses");
+
     }, [])
 
     useEffect(() => {
@@ -97,13 +99,15 @@ const Course: NextPage = () => {
                             <div className="mt-4">
                                 <p className="text-xl font-bold">{el?.name}</p>
                                 <div className="py-2">
-                                    <div className={`${Styles.badge} py-2 rounded-md w-28 text-center text-xs`}>Free Member</div>
+                                    {el?.paket[0]?.is_member == 1 && (
+                                        <div className={`${Styles.badge} py-2 rounded-md w-28 text-center text-xs`}>Free Member</div>
+                                    )}
                                 </div>
                                 <div className="py-1">
                                     <p className={`text-md`}>E-course</p>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <p className={`${Styles.price} text-lg font-bold`}>Rp 1.755.000</p>
+                                    <p className={`${Styles.price} text-lg font-bold`}>Rp {el?.paket?.length > 0 ? el?.paket[0]?.price : '0'}</p>
                                     <div className="flex gap-1">
                                         <Image
                                             src={star}

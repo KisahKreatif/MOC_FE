@@ -13,6 +13,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import myLoader from '../../../../src/helpers/loadImage'
 import { fetchNews } from '../../../../store/reducers/news'
+import { fetchCurrentUser } from '../../../../store/reducers/user'
 
 const Home: NextPage = () => {
     const dispatch = useDispatch()
@@ -29,10 +30,13 @@ const Home: NextPage = () => {
 
     const banners = useSelector(({ banners }: any) => banners.Banners)
     const news = useSelector(({ news }: any) => news.News)
+    const user = useSelector(({ user }: any) => user.CurrentUser)
 
     useEffect(() => {
         dispatch(fetchBanners())
         dispatch(fetchNews('', true))
+        const token = localStorage.getItem('access_token')
+        if (token) dispatch(fetchCurrentUser(token))
     }, [])
 
     return (
@@ -115,13 +119,24 @@ const Home: NextPage = () => {
                     </div>
                     <div className={`${Styles.dashboard} p-4 mt-4`}>
                         <div className="flex gap-4">
-                            <div className={`${Styles.dashboardContent} p-4 w-1/3 rounded-lg flex-none`}>
-                                <div className="flex gap-4">
-                                    <div className={`${Styles.TitleDivider} w-2`}></div>
-                                    <p className={`${Styles.title} text-2xl`}>KOMISI</p>
+                            <div className="w-1/3 h-full">
+                                <div className={`${Styles.dashboardContent} p-4 h-64 rounded-lg flex-none`}>
+                                    <div className="flex gap-4">
+                                        <div className={`${Styles.TitleDivider} w-2`}></div>
+                                        <p className={`${Styles.title} text-2xl`}>KOMISI</p>
+                                    </div>
+                                    <div className="h-full flex items-center justify-center" >
+                                        <p className="text-6xl font-bold">24</p>
+                                    </div>
                                 </div>
-                                <div className="h-full flex items-center justify-center" >
-                                    <p className="text-6xl font-bold">24</p>
+                                <div className={`${Styles.dashboardContent} mt-4 h-36 p-4 rounded-lg flex-none`}>
+                                    <div className="flex gap-4">
+                                        <div className={`${Styles.TitleDivider} w-2`}></div>
+                                        <p className={`${Styles.title} text-xl`}>Total omzet</p>
+                                    </div>
+                                    <div className="h-full flex items-center justify-center" >
+                                        <p className="text-2xl font-bold">24</p>
+                                    </div>
                                 </div>
                             </div>
                             <div className="w-full">
@@ -136,7 +151,7 @@ const Home: NextPage = () => {
                                                 <p className={`${Styles.title} text-sm`}>POINT</p>
                                             </div>
                                             <div className="pb-4">
-                                                <p className="text-2xl text-center font-bold">70</p>
+                                                <p className="text-2xl text-center font-bold">{user?.point}</p>
                                             </div>
                                         </div>
                                         <div className={`${Styles.dashboardContent} p-2 rounded-md flex-none`}>
@@ -144,15 +159,15 @@ const Home: NextPage = () => {
                                                 <p className={`${Styles.title} text-sm`}>Invitation</p>
                                             </div>
                                             <div className="pb-4">
-                                                <p className="text-2xl text-center font-bold">70</p>
+                                                <p className="text-2xl text-center font-bold">0</p>
                                             </div>
                                         </div>
                                         <div className={`${Styles.dashboardContent} p-2 col-span-2 rounded-md flex-none`}>
                                             <div className="">
-                                                <p className={`${Styles.title} text-sm`}>Product Sale</p>
+                                                <p className={`${Styles.title} text-sm`}>Omzet</p>
                                             </div>
                                             <div className="pb-4">
-                                                <p className="text-2xl text-center font-bold">70</p>
+                                                <p className="text-2xl text-center font-bold">0</p>
                                             </div>
                                         </div>
                                     </div>
@@ -168,7 +183,7 @@ const Home: NextPage = () => {
                                                 <p className={`${Styles.title} text-sm`}>POINT</p>
                                             </div>
                                             <div className="pb-4">
-                                                <p className="text-2xl text-center font-bold">70</p>
+                                                <p className="text-2xl text-center font-bold">0</p>
                                             </div>
                                         </div>
                                         <div className={`${Styles.dashboardContent} p-2 rounded-md flex-none`}>
@@ -176,15 +191,15 @@ const Home: NextPage = () => {
                                                 <p className={`${Styles.title} text-sm`}>Invitation</p>
                                             </div>
                                             <div className="pb-4">
-                                                <p className="text-2xl text-center font-bold">70</p>
+                                                <p className="text-2xl text-center font-bold">0</p>
                                             </div>
                                         </div>
                                         <div className={`${Styles.dashboardContent} p-2 col-span-2 rounded-md flex-none`}>
                                             <div className="">
-                                                <p className={`${Styles.title} text-sm`}>Product Sale</p>
+                                                <p className={`${Styles.title} text-sm`}>Omzet</p>
                                             </div>
                                             <div className="pb-4">
-                                                <p className="text-2xl text-center font-bold">70</p>
+                                                <p className="text-2xl text-center font-bold">0</p>
                                             </div>
                                         </div>
                                     </div>
@@ -200,7 +215,7 @@ const Home: NextPage = () => {
                                                 <p className={`${Styles.title} text-sm`}>POINT</p>
                                             </div>
                                             <div className="pb-4">
-                                                <p className="text-2xl text-center font-bold">70</p>
+                                                <p className="text-2xl text-center font-bold">0</p>
                                             </div>
                                         </div>
                                         <div className={`${Styles.dashboardContent} p-2 rounded-md flex-none`}>
@@ -208,15 +223,15 @@ const Home: NextPage = () => {
                                                 <p className={`${Styles.title} text-sm`}>Invitation</p>
                                             </div>
                                             <div className="pb-4">
-                                                <p className="text-2xl text-center font-bold">70</p>
+                                                <p className="text-2xl text-center font-bold">0</p>
                                             </div>
                                         </div>
                                         <div className={`${Styles.dashboardContent} p-2 col-span-2 rounded-md flex-none`}>
                                             <div className="">
-                                                <p className={`${Styles.title} text-sm`}>Product Sale</p>
+                                                <p className={`${Styles.title} text-sm`}>Omzet</p>
                                             </div>
                                             <div className="pb-4">
-                                                <p className="text-2xl text-center font-bold">70</p>
+                                                <p className="text-2xl text-center font-bold">0</p>
                                             </div>
                                         </div>
                                     </div>

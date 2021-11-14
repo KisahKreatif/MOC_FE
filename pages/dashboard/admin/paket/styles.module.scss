@@ -1,0 +1,69 @@
+.input {
+    background-color: #252633;
+}
+
+.bgPrimary {
+    background-color: #283246;
+}
+
+.bgSecondary {
+    background-color: #FF9F1C;
+}
+
+.bgTransparent {
+    background-color: rgba(40, 50, 70, 0.5);
+}
+
+.filter {
+    color: #FF9F1C;
+}
+
+.inputFile {
+    display: none;
+}
+
+.table {
+    border-collapse: collapse;
+    // width: 100%;
+    border-radius: 1em;
+    white-space: nowrap;
+    // overflow: hidden;
+
+    td, th {
+        text-align: center;
+        padding: 18px;
+      }
+
+    td {
+        background-color: #252633;
+    }
+
+    .thead {
+        background-color: #283246;
+    }
+
+    tbody {
+        border-bottom: 1px solid #303355 ;
+        color: #FF9F1C;
+    }
+
+    .badgePrimary {
+        background-color: #188DE2;
+        color: #ffff;
+    }
+
+    .badgeSecondary {
+        background-color: #F48116;
+        color: #ffff;
+    }
+    
+    .statusBtn {
+        background-color: #F44141;
+        color: #ffff;
+    }
+    
+    .actionBtn {
+        background-color: #3DB007;
+        color: #ffff;
+    }
+}

@@ -1,0 +1,44 @@
+.bgPrimary {
+    background-color: #FF9F1C;
+}
+.bgTransparent {
+    background-color: rgba(40, 50, 70, 0.5);
+}
+.bgSecondary {
+    background-color: #283246;
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 1em;
+    overflow: hidden;
+
+    td, th {
+        text-align: left;
+        padding: 18px;
+      }
+
+    td {
+        background-color: #252633;
+    }
+
+    .thead {
+        background-color: #283246;
+    }
+
+    .tbody {
+        border-bottom: 1px solid #303355 ;
+        color: #FF9F1C;
+    }
+
+    .badgePrimary {
+        background-color: #F4F4F4;
+        color: #283246;
+    }
+
+    .badgeSecondary {
+        background-color: #283246;
+        color: #FF9F1C;
+    }
+}

@@ -7,6 +7,8 @@ import bannerReducer from './reducers/banner'
 import courseReducer from './reducers/course'
 import cartReducer from './reducers/cart'
 import transactionReducer from './reducers/transaction'
+import userReducer from './reducers/user'
+import paketReducer from './reducers/paket'
 
 const reducers = combineReducers({
     products: productReducer,
@@ -14,7 +16,9 @@ const reducers = combineReducers({
     banners: bannerReducer,
     courses: courseReducer,
     carts: cartReducer,
-    transaction: transactionReducer
+    transaction: transactionReducer,
+    user: userReducer,
+    paket: paketReducer
 })
 
 const store = (context: Context) => createStore(reducers, applyMiddleware(thunk))
