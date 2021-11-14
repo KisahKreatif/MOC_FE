@@ -116,7 +116,7 @@ const ProdukFisik: NextPage = () => {
                                 <p className="font-bold text-lg">Course yang diperoleh:</p>
                                 <ul className="mt-4">
                                     {course?.paket?.map((el: any, i: any) => (
-                                        <li className="mt-2 text-lg">{i + 1}. {el.name}</li>
+                                        <li key={i} className="mt-2 text-lg">{i + 1}. {el.name}</li>
                                     ))}
                                 </ul>
                             </div>
