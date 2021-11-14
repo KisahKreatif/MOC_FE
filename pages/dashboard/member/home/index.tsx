@@ -126,7 +126,7 @@ const Home: NextPage = () => {
                                         <p className={`${Styles.title} text-2xl`}>KOMISI</p>
                                     </div>
                                     <div className="h-full flex items-center justify-center" >
-                                        <p className="text-6xl font-bold">24</p>
+                                        <p className="text-6xl font-bold">0</p>
                                     </div>
                                 </div>
                                 <div className={`${Styles.dashboardContent} mt-4 h-36 p-4 rounded-lg flex-none`}>
@@ -135,7 +135,7 @@ const Home: NextPage = () => {
                                         <p className={`${Styles.title} text-xl`}>Total omzet</p>
                                     </div>
                                     <div className="h-full flex items-center justify-center" >
-                                        <p className="text-2xl font-bold">24</p>
+                                        <p className="text-2xl font-bold">0</p>
                                     </div>
                                 </div>
                             </div>
