@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import myLoader from '../../../../src/helpers/loadImage'
 import { fetchNews } from '../../../../store/reducers/news'
 import { fetchCurrentUser } from '../../../../store/reducers/user'
+import { fetchOmsets } from '../../../../store/reducers/omset'
 
 const Home: NextPage = () => {
     const dispatch = useDispatch()
@@ -31,12 +32,20 @@ const Home: NextPage = () => {
     const banners = useSelector(({ banners }: any) => banners.Banners)
     const news = useSelector(({ news }: any) => news.News)
     const user = useSelector(({ user }: any) => user.CurrentUser)
+    const omsets = useSelector(({ omsets }: any) => omsets.Omsets)
 
     useEffect(() => {
+        console.log(user, "<<< user");
+
+
         dispatch(fetchBanners())
         dispatch(fetchNews('', true))
         const token = localStorage.getItem('access_token')
-        if (token) dispatch(fetchCurrentUser(token))
+        const role = localStorage.getItem('role')
+        if (token) {
+            dispatch(fetchCurrentUser(token))
+            dispatch(fetchOmsets(token, role))
+        }
     }, [])
 
     return (
@@ -113,7 +122,7 @@ const Home: NextPage = () => {
                             </div>
                         </div>
                         <div className="mt-2 ml-4">
-                            <p className="text-lg">Tanggal daftar : 31-Jan-2021, Masa Aktif User: Life Time</p>
+                            <p className="text-lg">Tanggal daftar : {user?.created_at && (<span>{`${new Date(user?.created_at).getDate()}-${new Date(user?.created_at).getMonth()}-${new Date(user?.created_at).getFullYear()}`}</span>)}, Masa Aktif User: Life Time</p>
                         </div>
                         <div className="h-px bg-gray-300 mt-2"></div>
                     </div>
@@ -126,7 +135,7 @@ const Home: NextPage = () => {
                                         <p className={`${Styles.title} text-2xl`}>KOMISI</p>
                                     </div>
                                     <div className="h-full flex items-center justify-center" >
-                                        <p className="text-6xl font-bold">0</p>
+                                        <p className="text-6xl font-bold">{omsets?.komisi}</p>
                                     </div>
                                 </div>
                                 <div className={`${Styles.dashboardContent} mt-4 h-36 p-4 rounded-lg flex-none`}>
@@ -135,7 +144,7 @@ const Home: NextPage = () => {
                                         <p className={`${Styles.title} text-xl`}>Total omzet</p>
                                     </div>
                                     <div className="h-full flex items-center justify-center" >
-                                        <p className="text-2xl font-bold">0</p>
+                                        <p className="text-2xl font-bold">{omsets?.productSaleAll}</p>
                                     </div>
                                 </div>
                             </div>
@@ -159,7 +168,7 @@ const Home: NextPage = () => {
                                                 <p className={`${Styles.title} text-sm`}>Invitation</p>
                                             </div>
                                             <div className="pb-4">
-                                                <p className="text-2xl text-center font-bold">0</p>
+                                                <p className="text-2xl text-center font-bold">{omsets?.invitationNow}</p>
                                             </div>
                                         </div>
                                         <div className={`${Styles.dashboardContent} p-2 col-span-2 rounded-md flex-none`}>
@@ -167,7 +176,7 @@ const Home: NextPage = () => {
                                                 <p className={`${Styles.title} text-sm`}>Omzet</p>
                                             </div>
                                             <div className="pb-4">
-                                                <p className="text-2xl text-center font-bold">0</p>
+                                                <p className="text-2xl text-center font-bold">{omsets?.productSaleNow}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -183,7 +192,7 @@ const Home: NextPage = () => {
                                                 <p className={`${Styles.title} text-sm`}>POINT</p>
                                             </div>
                                             <div className="pb-4">
-                                                <p className="text-2xl text-center font-bold">0</p>
+                                                <p className="text-2xl text-center font-bold">{omsets?.point}</p>
                                             </div>
                                         </div>
                                         <div className={`${Styles.dashboardContent} p-2 rounded-md flex-none`}>
@@ -191,7 +200,7 @@ const Home: NextPage = () => {
                                                 <p className={`${Styles.title} text-sm`}>Invitation</p>
                                             </div>
                                             <div className="pb-4">
-                                                <p className="text-2xl text-center font-bold">0</p>
+                                                <p className="text-2xl text-center font-bold">{omsets?.invitationMonth}</p>
                                             </div>
                                         </div>
                                         <div className={`${Styles.dashboardContent} p-2 col-span-2 rounded-md flex-none`}>
@@ -199,7 +208,7 @@ const Home: NextPage = () => {
                                                 <p className={`${Styles.title} text-sm`}>Omzet</p>
                                             </div>
                                             <div className="pb-4">
-                                                <p className="text-2xl text-center font-bold">0</p>
+                                                <p className="text-2xl text-center font-bold">{omsets?.productSaleMonth}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -215,7 +224,7 @@ const Home: NextPage = () => {
                                                 <p className={`${Styles.title} text-sm`}>POINT</p>
                                             </div>
                                             <div className="pb-4">
-                                                <p className="text-2xl text-center font-bold">0</p>
+                                                <p className="text-2xl text-center font-bold">{omsets?.point}</p>
                                             </div>
                                         </div>
                                         <div className={`${Styles.dashboardContent} p-2 rounded-md flex-none`}>
@@ -223,7 +232,7 @@ const Home: NextPage = () => {
                                                 <p className={`${Styles.title} text-sm`}>Invitation</p>
                                             </div>
                                             <div className="pb-4">
-                                                <p className="text-2xl text-center font-bold">0</p>
+                                                <p className="text-2xl text-center font-bold">{omsets?.invitationAll}</p>
                                             </div>
                                         </div>
                                         <div className={`${Styles.dashboardContent} p-2 col-span-2 rounded-md flex-none`}>
@@ -231,7 +240,7 @@ const Home: NextPage = () => {
                                                 <p className={`${Styles.title} text-sm`}>Omzet</p>
                                             </div>
                                             <div className="pb-4">
-                                                <p className="text-2xl text-center font-bold">0</p>
+                                                <p className="text-2xl text-center font-bold">{omsets?.productSaleAll}</p>
                                             </div>
                                         </div>
                                     </div>

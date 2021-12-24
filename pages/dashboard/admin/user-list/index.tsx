@@ -5,11 +5,42 @@ import Styles from './styles.module.scss';
 import UserPic from '../../../../src/assets/images/user.jpg';
 import ILClose from '../../../../src/assets/svg/ILClose.svg'
 import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { fetchUsers } from "../../../../store/reducers/user"
+import myLoader from "../../../../src/helpers/loadImage";
 
 const UserList = () => {
     const router = useRouter()
     const data = [1, 2, 3, 4, 5, 6, 7]
     const [modal, setModal] = useState(false)
+    const [search, setSearch] = useState('')
+
+    const dispatch = useDispatch()
+    const users = useSelector(({ user }: any) => user.Users)
+
+    useEffect(() => {
+        const token = localStorage.getItem('access_token')
+        if (token) {
+            dispatch(fetchUsers(token, '', '', false))
+        }
+
+        console.log(users, "<<< users");
+    }, [])
+
+    const onChange = (e: any) => {
+        setSearch(e.target.value)
+        console.log(e.target.value, "<< e.target.value");
+
+    }
+
+    const submitSearch = (e: any) => {
+        e.preventDefault()
+        console.log('here << ', search);
+
+        const token = localStorage.getItem('access_token')
+        if (token) dispatch(fetchUsers(token, search, '', false))
+    }
 
     return (
         <DashboardAdmin>
@@ -20,32 +51,33 @@ const UserList = () => {
                         <p className="text-xl font-bold">LIST USER</p>
                     </div>
                     <div className="flex gap-4">
-                        <input type="text" name="search" id="search" placeholder="Search" className={`${Styles.colorYellow} ${Styles.bgWhite} px-4 py-2 rounded-3xl`} />
-                        <div className={`${Styles.bgYellow} cursor-pointer px-4 py-2 font-bold rounded-lg`}>
-                            Search
-                        </div>
+                        <form onSubmit={submitSearch}>
+                            <input type="text" name="search" id="search" placeholder="Search" value={search} onChange={onChange} className={`${Styles.colorYellow} ${Styles.bgWhite} px-4 py-2 rounded-3xl`} />
+                            <input type="submit" value="Search" className={`${Styles.bgYellow} cursor-pointer px-4 py-2 font-bold rounded-lg`} />
+                        </form>
                     </div>
                 </div>
 
                 <div className="mt-8 grid md:grid-cols-3 grid-cols-1 gap-4">
-                    {data.map(el => (
-                        <div key={el} className={`${Styles.bgWhite} p-4 rounded-lg`}>
+                    {users && users?.length > 0 && users.map((el: any) => (
+                        <div key={el.id} className={`${Styles.bgWhite} p-4 rounded-lg`}>
                             <div className="text-center md:py-12">
                                 <Image
-                                    src={UserPic}
+                                    loader={myLoader}
+                                    src={el.profile_photo_url}
                                     width={120}
                                     height={120}
                                     className="rounded-full object-cover"
                                 />
                             </div>
                             <div className="mt-2">
-                                <p className="text-xl md:text-2xl font-bold text-black">Admin</p>
+                                <p className="text-xl md:text-2xl font-bold text-black">{el?.name}</p>
                                 <div className={`${Styles.badge} rounded-md mt-2 px-2 py-2 w-16`}>
-                                    <p className={`font-bold text-xs`}>Member</p>
+                                    <p className={`font-bold text-xs`}>{el?.role}</p>
                                 </div>
                                 <div className="mt-2 flex gap-4">
                                     <p className="text-black">Perolehan poin:</p>
-                                    <p className={`${Styles.colorYellow} font-bold`}>1000</p>
+                                    <p className={`${Styles.colorYellow} font-bold`}>{el?.point}</p>
                                 </div>
                                 <div className="flex gap-2 mt-4">
                                     <div

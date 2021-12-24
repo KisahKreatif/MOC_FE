@@ -48,9 +48,9 @@ const LeaderBoard: NextPage = () => {
                             <th>Rank</th>
                             <th>Jumlah Transaksi</th>
                         </tr>
-                        {leaderBoard && leaderBoard?.length > 0 && leaderBoard?.map((el: any) => (
+                        {leaderBoard && leaderBoard?.length > 0 && leaderBoard?.map((el: any, i: any) => (
                             <tr key={el.id} className={`${Styles.tbody} cursor-pointer`} >
-                                <td>1.</td>
+                                <td>{i + 1}.</td>
                                 <td className="flex gap-4 items-center" >
                                     <div className="w-8 h-8 rounded-full">
                                         <Image

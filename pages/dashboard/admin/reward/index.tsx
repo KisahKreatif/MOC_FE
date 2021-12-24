@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import DashboardMember from ".."
 import Styles from './styles.module.scss'
@@ -6,13 +6,23 @@ import Reward from '../../../../src/assets/images/reward.png'
 import ILClose from '../../../../src/assets/svg/ILClose.svg'
 import swal from 'sweetalert'
 import myLoader from '../../../../src/helpers/loadImage'
+import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchRewards } from '../../../../store/reducers/rewards'
 
 const MyReward = () => {
+    const dispatch = useDispatch()
+    const rewards = useSelector(({ rewards }: any) => rewards.Rewards)
+
     const [modal, setModal] = useState(false)
     const [modal1, setModal1] = useState(false)
 
     const [form, setForm] = useState<any>({})
     const [image, setImage] = useState<any>({})
+
+    useEffect(() => {
+        dispatch(fetchRewards())
+    }, [])
 
     const onChange = (e: any) => {
         const name = e.target.name
@@ -29,7 +39,29 @@ const MyReward = () => {
     const onSubmit = async (e: any) => {
         e.preventDefault()
         try {
-            console.log(form, "<< form");
+            const data: any = {
+                judul: form.judul,
+                desc: form.desc,
+                point: form.harga_point,
+                batas: form.batas
+            }
+
+            const fd = new FormData()
+
+            Object.keys(data).map((key: any) => {
+                fd.append(key, data[key])
+            })
+
+            fd.append('image', image)
+
+            const res = await axios.post(`${process.env.apiUrl}/reward/create`, fd)
+
+            if (res.data?.meta?.code === 200) {
+                swal(`Success add reward`)
+                setForm({})
+                setModal(false)
+                setModal1(false)
+            } else throw { message: 'server error' }
         } catch (error: any) {
             swal(`Something error ` + error.message)
         }
@@ -67,42 +99,47 @@ const MyReward = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className={`${Styles.tbody} cursor-pointer`} >
-                                <td>2.</td>
-                                <td>SmartPhone</td>
-                                <td>
-                                    <Image
-                                        src={Reward}
-                                        width={100}
-                                        height={100}
-                                    />
-                                </td>
-                                <td>SmartPhone</td>
-                                <td>SmartPhone</td>
-                                <td>SmartPhone</td>
-                                <td>
-                                    <div className="flex gap-4">
-                                        <div
-                                            className={`${Styles.badgePrimary} cursor-pointer rounded-md py-2 w-24`}
-                                            onClick={() => {
-                                                setModal(true)
-                                                setModal1(true)
-                                            }}
-                                        >
-                                            <p className="text-xs text-center">Edit</p>
+                            {rewards && rewards?.map((el: any, i: any) => (
+                                <tr key={el.id} className={`${Styles.tbody} cursor-pointer`} >
+                                    <td>{i + 1}.</td>
+                                    <td>{el?.judul}</td>
+                                    <td>
+                                        {el?.image && (
+                                            <Image
+                                                loader={myLoader}
+                                                src={el.image}
+                                                width={100}
+                                                height={100}
+                                            />
+                                        )}
+                                    </td>
+                                    <td>{el?.desc}</td>
+                                    <td>{el?.point}</td>
+                                    <td>{el?.batas}</td>
+                                    <td>
+                                        <div className="flex gap-4">
+                                            <div
+                                                className={`${Styles.badgePrimary} cursor-pointer rounded-md py-2 w-24`}
+                                                onClick={() => {
+                                                    setModal(true)
+                                                    setModal1(true)
+                                                }}
+                                            >
+                                                <p className="text-xs text-center">Edit</p>
+                                            </div>
+                                            <div
+                                                className={`${Styles.badgeSecondary} cursor-pointer rounded-md py-2 w-24`}
+                                                onClick={() => {
+                                                    setModal1(false)
+                                                    setModal(true)
+                                                }}
+                                            >
+                                                <p className="text-xs text-center">Detail</p>
+                                            </div>
                                         </div>
-                                        <div
-                                            className={`${Styles.badgeSecondary} cursor-pointer rounded-md py-2 w-24`}
-                                            onClick={() => {
-                                                setModal1(false)
-                                                setModal(true)
-                                            }}
-                                        >
-                                            <p className="text-xs text-center">Detail</p>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>

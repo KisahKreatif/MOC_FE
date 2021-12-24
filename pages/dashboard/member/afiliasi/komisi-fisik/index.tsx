@@ -2,8 +2,22 @@ import Image from 'next/image'
 import DashboardMember from "../.."
 import Styles from './styles.module.scss'
 import filter from '../../../../../src/assets/svg/filter.svg'
+import myLoader from '../../../../../src/helpers/loadImage'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { fetchComissionPoductMember } from '../../../../../store/reducers/comissions'
 
 const ComissionFisik = () => {
+    const dispatch = useDispatch()
+    const comissions = useSelector(({ comissions }: any) => comissions.Products)
+
+    useEffect(() => {
+        const token = localStorage.getItem('access_token')
+        if (token) {
+            dispatch(fetchComissionPoductMember(token))
+        }
+    }, [])
+
     return (
         <DashboardMember>
             <div className="py-8 px-16">
@@ -35,36 +49,38 @@ const ComissionFisik = () => {
                             <th>Total Komisi</th>
                             <th>Status</th>
                         </tr>
-                        <tr className={`${Styles.tbody} cursor-pointer`} >
-                            <td>1.</td>
-                            <td className="flex gap-4 items-center" >
-                                <div className="w-8 h-8 rounded-full bg-gray-300"></div>
-                                <p>Danuar Riyaldi</p>
-                            </td>
-                            <td>Produk 1</td>
-                            <td>940 Transaksi</td>
-                            <td>940 Transaksi</td>
-                            <td>
-                                <div className={`${Styles.badgePrimary} rounded-md py-2`}>
-                                    <p className="text-xs text-center">Menunggu Pembayaran</p>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr className={`${Styles.tbody} cursor-pointer`} >
-                            <td>1.</td>
-                            <td className="flex gap-4 items-center" >
-                                <div className="w-8 h-8 rounded-full bg-gray-300"></div>
-                                <p>Danuar Riyaldi</p>
-                            </td>
-                            <td>Produk 1</td>
-                            <td>940 Transaksi</td>
-                            <td>940 Transaksi</td>
-                            <td>
-                                <div className={`${Styles.badgeSecondary} rounded-md py-2`}>
-                                    <p className="text-xs text-center">Sudah Bayar</p>
-                                </div>
-                            </td>
-                        </tr>
+                        {comissions && comissions?.map((el: any, i: any) => (
+                            <tr key={el.id} className={`${Styles.tbody} cursor-pointer`} >
+                                <td>{i + 1}.</td>
+                                <td className="flex gap-4 items-center" >
+                                    {el?.user?.profile_photo_url && (
+                                        <div className="w-8 h-8 rounded-full">
+                                            <Image
+                                                loader={myLoader}
+                                                src={el?.user?.profile_photo_url}
+                                                width={50}
+                                                height={50}
+                                                alt="profile"
+                                                className="rounded-full"
+                                            />
+                                        </div>
+                                    )}
+                                    <p>{el?.user?.name}</p>
+                                </td>
+                                <td>{el?.product?.name}</td>
+                                <td>
+                                    {el?.created_at && (
+                                        <p>{new Date(el.created_at).toLocaleDateString()}</p>
+                                    )}
+                                </td>
+                                <td>{el?.commission}</td>
+                                <td>
+                                    <div className={`${Styles.badgePrimary} rounded-md py-2`}>
+                                        <p className="text-xs text-center">Menunggu Pembayaran</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
                     </table>
                 </div>
             </div>

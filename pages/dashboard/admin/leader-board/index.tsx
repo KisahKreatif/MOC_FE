@@ -2,8 +2,20 @@ import Image from "next/image"
 import DashboardMember from ".."
 import Styles from './styles.module.scss'
 import filter from '../../../../src/assets/svg/filter.svg'
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { fetchUsers } from "../../../../store/reducers/user"
+import myLoader from "../../../../src/helpers/loadImage"
 
 const LeaderBoard = () => {
+    const dispatch = useDispatch()
+    const leaderBoard = useSelector(({ user }: any) => user.Users)
+
+    useEffect(() => {
+        const token = localStorage.getItem('access_token')
+        if (token) dispatch(fetchUsers(token, '', '', true))
+    }, [])
+
     return (
         <DashboardMember>
             <div className="p-8">
@@ -33,60 +45,35 @@ const LeaderBoard = () => {
                             <th>Rank</th>
                             <th>Jumlah Transaksi</th>
                         </tr>
-                        <tr className={`${Styles.tbody} cursor-pointer`} >
-                            <td>1.</td>
-                            <td className="flex gap-4 items-center" >
-                                <div className="w-8 h-8 rounded-full bg-gray-300"></div>
-                                <p>Danuar Riyaldi</p>
-                            </td>
-                            <td>
-                                <div className="flex gap-2">
-                                    <div className={`${Styles.badgePrimary} rounded-md py-2 px-4`}>
-                                        <p className="text-xs">Master Seller</p>
+                        {leaderBoard && leaderBoard?.length > 0 && leaderBoard?.map((el: any, i: any) => (
+                            <tr key={el.id} className={`${Styles.tbody} cursor-pointer`} >
+                                <td>{i + 1}.</td>
+                                <td className="flex gap-4 items-center" >
+                                    <div className="w-8 h-8 rounded-full">
+                                        <Image
+                                            loader={myLoader}
+                                            src={el.profile_photo_url}
+                                            width={50}
+                                            height={50}
+                                            alt="profile"
+                                            className="rounded-full"
+                                        />
                                     </div>
-                                    <div className={`${Styles.badgeSecondary} rounded-md py-2 px-4`}>
-                                        <p className="text-xs">Bronze</p>
+                                    <p>{el?.name}</p>
+                                </td>
+                                <td>
+                                    <div className="flex gap-2">
+                                        <div className={`${Styles.badgePrimary} rounded-md py-2 px-4`}>
+                                            <p className="text-xs">Master Seller</p>
+                                        </div>
+                                        <div className={`${Styles.badgeSecondary} rounded-md py-2 px-4`}>
+                                            <p className="text-xs">Bronze</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>940 Transaksi</td>
-                        </tr>
-                        <tr className={`${Styles.tbody} cursor-pointer`} >
-                            <td>2.</td>
-                            <td className="flex gap-4 items-center" >
-                                <div className="w-8 h-8 rounded-full bg-gray-300"></div>
-                                <p>Danuar Riyaldi</p>
-                            </td>
-                            <td>
-                                <div className="flex gap-2">
-                                    <div className={`${Styles.badgePrimary} rounded-md py-2 px-4`}>
-                                        <p className="text-xs">Master Seller</p>
-                                    </div>
-                                    <div className={`${Styles.badgeSecondary} rounded-md py-2 px-4`}>
-                                        <p className="text-xs">Bronze</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>940 Transaksi</td>
-                        </tr>
-                        <tr className={`${Styles.tbody} cursor-pointer`} >
-                            <td>3.</td>
-                            <td className="flex gap-4 items-center" >
-                                <div className="w-8 h-8 rounded-full bg-gray-300"></div>
-                                <p>Danuar Riyaldi</p>
-                            </td>
-                            <td>
-                                <div className="flex gap-2">
-                                    <div className={`${Styles.badgePrimary} rounded-md py-2 px-4`}>
-                                        <p className="text-xs">Master Seller</p>
-                                    </div>
-                                    <div className={`${Styles.badgeSecondary} rounded-md py-2 px-4`}>
-                                        <p className="text-xs">Bronze</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>940 Transaksi</td>
-                        </tr>
+                                </td>
+                                <td>{el?.transactions_count} Transaksi</td>
+                            </tr>
+                        ))}
                     </table>
                 </div>
             </div>

@@ -36,8 +36,11 @@ export function fetchCurrentUser(token: any) {
 
 export function fetchUsers(token: any, name: string = '', role: string = '', leaderBoard: boolean = false) {
     return async (dispatch: any) => {
-        const res = await fetch(`${process.env.apiUrl}/users?name${name}&role=${role}&leader-board=${leaderBoard}`, { headers: { authorization: token } })
+        console.log(name, "<<< name");
+        const res = await fetch(`${process.env.apiUrl}/users?name=${name}&role=${role}&leader-board=${leaderBoard}`, { headers: { authorization: token } })
         const json = await res.json()
+
+        console.log(json, "<< json");
 
         if (json.meta.code === 200) {
             dispatch(setUsers(json.data.data))

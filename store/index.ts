@@ -9,6 +9,9 @@ import cartReducer from './reducers/cart'
 import transactionReducer from './reducers/transaction'
 import userReducer from './reducers/user'
 import paketReducer from './reducers/paket'
+import comissionsReducer from './reducers/comissions'
+import rewardsReducer from './reducers/rewards'
+import omsetReducer from './reducers/omset'
 
 const reducers = combineReducers({
     products: productReducer,
@@ -18,7 +21,10 @@ const reducers = combineReducers({
     carts: cartReducer,
     transaction: transactionReducer,
     user: userReducer,
-    paket: paketReducer
+    paket: paketReducer,
+    comissions: comissionsReducer,
+    rewards: rewardsReducer,
+    omsets: omsetReducer
 })
 
 const store = (context: Context) => createStore(reducers, applyMiddleware(thunk))

@@ -35,6 +35,7 @@ const DashboardAdmin = ({ children }: any) => {
     const [sideNavAbsolute, setSideNavAbsolute] = useState(false)
     const [childProduct, setChildProduct] = useState(false)
     const [profile, setProfile] = useState(false)
+    const [notification, setNotification] = useState(false)
 
     useEffect(() => {
         const role = localStorage.getItem('role')
@@ -104,17 +105,31 @@ const DashboardAdmin = ({ children }: any) => {
                                     </a>
                                 </Link>
                             </li>
-                            <li>
-                                <Link href="/">
-                                    <a>
-                                        <Image
-                                            src={Bell}
-                                            width={30}
-                                            height={30}
-                                            alt="MOC Logo"
-                                        />
-                                    </a>
-                                </Link>
+                            <li className="relative">
+                                <Image
+                                    src={Bell}
+                                    width={30}
+                                    height={30}
+                                    alt="MOC Logo"
+                                    className="cursor-pointer"
+                                    onClick={() => setNotification(!notification)}
+                                />
+                                {notification && (
+                                    <div className="absolute shadow-lg right-0 w-96 p-2 rounded-md bg-white text-black">
+                                        <ul>
+                                            <li className="border-b-2 p-2 border-gray-300">
+                                                <p className="font-bold">Admin MOC</p>
+                                                <p className="text-sm">Selamat Bergabung dengan keluarga MOC Member</p>
+                                                <div className="flex justify-end mt-4">
+                                                    <p className="text-sm text-gray-400">4 menit yang lalu</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div className="cursor-pointer mt-4 bg-yellow-400 rounded-md p-2 text-white text-center font-bold">
+                                            Cek semua notifikasi
+                                        </div>
+                                    </div>
+                                )}
                             </li>
                             <li>
                                 <Link href="/">
